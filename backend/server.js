@@ -8,7 +8,7 @@ require('dotenv').config();
 try {
   dns.setDefaultResultOrder('ipv4first');
   dns.setServers(['8.8.8.8', '1.1.1.1']);
-} catch (e) {}
+} catch (e) { }
 
 const publicRoutes = require('./routes/public');
 const authRoutes = require('./routes/auth');
@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log(`Connected to MongoDB at ${MONGO_URI}`);
+    console.log(`Connected to MongoDB `);
   } catch (err) {
     console.error(`Failed to connect to primary MongoDB (${MONGO_URI}):`, err.message);
     if (MONGO_URI !== 'mongodb://127.0.0.1:27017/portfolio') {
