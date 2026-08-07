@@ -71,8 +71,31 @@ const connectDB = async () => {
   }
 };
 
-connectDB().then(() => {
+const bcrypt = require('bcryptjs');
+const { Admin } = require('./models/schemas');
+
+// Sync Admin credentials from .env to MongoDB
+const ensureAdminAccount = async () => {
+  try {
+    const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+    await Admin.deleteMany({});
+    await Admin.create({
+      username: adminUsername,
+      password: hashedPassword
+    });
+    console.log(`Admin credentials synced to MongoDB for username: ${adminUsername}`);
+  } catch (err) {
+    console.error('Failed to sync admin credentials:', err.message);
+  }
+};
+
+connectDB().then(async () => {
+  await ensureAdminAccount();
   app.listen(PORT, () => {
     console.log(`Backend server running on port ${PORT}`);
   });
 });
+
