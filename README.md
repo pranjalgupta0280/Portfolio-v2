@@ -88,11 +88,12 @@ npm install
 Create a `.env` file in `backend/.env`:
 ```env
 PORT=5000
-MONGO_URI=mongodb+srv://portfolio_admin:warmachine007@cluster0.xzmvqso.mongodb.net/?appName=Cluster0
-JWT_SECRET=super_secret_jwt_key_portfolio_2026
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.xzmvqso.mongodb.net/Portfolio
+JWT_SECRET=your_super_secret_jwt_key
 ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin123
+ADMIN_PASSWORD=your_secure_password
 ```
+
 
 Seed default portfolio content & admin account:
 ```bash
