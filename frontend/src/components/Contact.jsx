@@ -267,12 +267,13 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status.loading}
-                className="btn-primary"
-                style={{ justifyContent: 'center', marginTop: '10px', color: '#fff' }}
+                className="btn-cyan"
+                style={{ justifyContent: 'center', marginTop: '10px', color: '#ffffff' }}
               >
-                <Send size={16} />
-                <span>{status.loading ? 'Sending Message...' : 'Send Message'}</span>
+                <Send size={16} style={{ color: '#ffffff' }} />
+                <span style={{ color: '#ffffff', fontWeight: '700' }}>{status.loading ? 'Sending Message...' : 'Send Message'}</span>
               </button>
+
             </form>
           </div>
         </div>
