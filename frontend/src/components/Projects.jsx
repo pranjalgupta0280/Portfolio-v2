@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Sparkles, Layers, Eye, X } from 'lucide-react';
+import { ExternalLink, Github, Sparkles, Layers, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Projects() {
@@ -8,12 +8,26 @@ export default function Projects() {
 
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeModalProject, setActiveModalProject] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const ITEMS_PER_PAGE = 3;
 
   const categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
     : projects.filter(p => p.category === selectedCategory);
+
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE) || 1;
+  const paginatedProjects = filteredProjects.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handleCategoryChange = (cat) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
+  };
 
   return (
     <section id="projects" className="section-padding" style={{ position: 'relative', background: 'rgba(15, 23, 42, 0.3)' }}>
@@ -38,7 +52,7 @@ export default function Projects() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 style={{
                   padding: '8px 18px',
                   borderRadius: 'var(--radius-full)',
@@ -62,7 +76,7 @@ export default function Projects() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
           gap: '32px'
         }}>
-          {filteredProjects.map((proj) => (
+          {paginatedProjects.map((proj) => (
             <div key={proj._id} className="glass-panel" style={{
               overflow: 'hidden',
               display: 'flex',
@@ -183,6 +197,77 @@ export default function Projects() {
             </div>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+            marginTop: '48px'
+          }}>
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                borderRadius: 'var(--radius-md)',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid var(--border-subtle)',
+                color: currentPage === 1 ? 'var(--text-muted)' : '#fff',
+                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                opacity: currentPage === 1 ? 0.5 : 1
+              }}
+            >
+              <ChevronLeft size={16} />
+              <span>Previous</span>
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: 'var(--radius-md)',
+                  background: currentPage === pageNum ? 'var(--gradient-brand)' : 'rgba(255, 255, 255, 0.05)',
+                  color: '#fff',
+                  fontWeight: '700',
+                  fontSize: '0.9rem',
+                  border: '1px solid var(--border-subtle)',
+                  cursor: 'pointer'
+                }}
+              >
+                {pageNum}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                borderRadius: 'var(--radius-md)',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid var(--border-subtle)',
+                color: currentPage === totalPages ? 'var(--text-muted)' : '#fff',
+                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                opacity: currentPage === totalPages ? 0.5 : 1
+              }}
+            >
+              <span>Next</span>
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Project Detail Modal */}

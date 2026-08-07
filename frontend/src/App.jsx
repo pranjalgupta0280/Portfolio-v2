@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import DsaProfiles from './components/DsaProfiles';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import SkillsPage from './pages/SkillsPage';
+import DsaPage from './pages/DsaPage';
+import ProjectsPage from './pages/ProjectsPage';
+import ContactPage from './pages/ContactPage';
 
 import AdminLogin from './admin/AdminLogin';
 import AdminDashboard from './admin/AdminDashboard';
@@ -15,7 +17,7 @@ import { usePortfolio } from './context/PortfolioContext';
 
 export default function App() {
   const { isAuthenticated } = useAuth();
-  const { loading, error } = usePortfolio();
+  const { loading } = usePortfolio();
 
   const [adminModalOpen, setAdminModalOpen] = useState(false);
 
@@ -43,32 +45,34 @@ export default function App() {
           width: '48px',
           height: '48px',
           borderRadius: '50%',
-          border: '3px solid rgba(99, 102, 241, 0.2)',
-          borderTopColor: 'var(--accent-indigo)',
+          border: '3px solid rgba(0, 245, 212, 0.2)',
+          borderTopColor: 'var(--accent-cyan)',
           animation: 'spin 1s linear infinite'
         }} />
         <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
-        <p style={{ fontSize: '0.95rem', fontWeight: '500' }}>Loading Portfolio Experience...</p>
+        <p style={{ fontSize: '0.9rem', fontFamily: 'var(--font-code)', color: 'var(--accent-cyan)' }}>INITIALIZING SPATIAL SYSTEM...</p>
       </div>
     );
   }
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: 'var(--bg-primary)' }}>
-      {/* Public Navbar */}
+      {/* Public Glass Navbar */}
       <Navbar onOpenAdmin={handleOpenAdmin} />
 
-      {/* Public Page Sections */}
+      {/* Page Routes */}
       <main>
-        <Hero />
-        <About />
-        <Skills />
-        <DsaProfiles />
-        <Projects />
-        <Contact />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/skills" element={<SkillsPage />} />
+          <Route path="/dsa" element={<DsaPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
       </main>
 
-      {/* Public Footer */}
+      {/* Footer */}
       <Footer />
 
       {/* Admin Auth / Dashboard Gate Modal */}

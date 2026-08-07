@@ -1,28 +1,27 @@
-/* Core Modern SaaS Portfolio Design Tokens */
+/* Spatial Cyberpunk Tech Design System */
 :root {
-  --bg-primary: #090d16;
-  --bg-secondary: #0f172a;
-  --bg-surface: rgba(15, 23, 42, 0.65);
-  --bg-card: rgba(30, 41, 59, 0.45);
-  --bg-card-hover: rgba(30, 41, 59, 0.75);
+  --bg-primary: #07090e;
+  --bg-secondary: #0c0f17;
+  --bg-surface: rgba(12, 15, 23, 0.75);
+  --bg-card: rgba(18, 22, 34, 0.55);
+  --bg-card-hover: rgba(24, 30, 46, 0.85);
 
-  --accent-indigo: #6366f1;
+  --accent-cyan: #00f5d4;
+  --accent-cyan-glow: rgba(0, 245, 212, 0.35);
   --accent-purple: #a855f7;
+  --accent-purple-glow: rgba(168, 85, 247, 0.35);
   --accent-pink: #ec4899;
-  --accent-cyan: #06b6d4;
   --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
 
-  --gradient-brand: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-  --gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
-  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+  --gradient-cyan-purple: linear-gradient(135deg, #00f5d4 0%, #a855f7 100%);
+  --gradient-glow: radial-gradient(circle at 50% 20%, rgba(0, 245, 212, 0.18) 0%, rgba(168, 85, 247, 0.12) 50%, transparent 80%);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(99, 102, 241, 0.4);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-active: rgba(0, 245, 212, 0.4);
 
   --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-heading: 'Outfit', sans-serif;
@@ -30,12 +29,13 @@
 
   --radius-sm: 8px;
   --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-lg: 22px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.3);
-  --shadow-glass: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-glow-cyan: 0 0 25px rgba(0, 245, 212, 0.35);
+  --shadow-glow-purple: 0 0 25px rgba(168, 85, 247, 0.35);
+  --shadow-glass: 0 20px 40px rgba(0, 0, 0, 0.6);
 
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,6 +54,11 @@ html {
 body {
   font-family: var(--font-main);
   background-color: var(--bg-primary);
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
@@ -68,11 +73,11 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(0, 245, 212, 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-indigo);
+  background: var(--accent-cyan);
 }
 
 /* Base Typography */
@@ -95,6 +100,17 @@ button {
   background: none;
 }
 
+.tech-tag {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 /* Reusable Glass Utility Classes */
 .glass-panel {
   background: var(--bg-card);
@@ -106,69 +122,73 @@ button {
 }
 
 .glass-nav {
-  background: rgba(9, 13, 22, 0.75);
+  background: rgba(7, 9, 14, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .gradient-text {
-  background: var(--gradient-brand);
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-cyan) 60%, var(--accent-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  font-size: 0.825rem;
-  font-weight: 600;
-  background: rgba(99, 102, 241, 0.12);
-  color: #818cf8;
-  border: 1px solid rgba(99, 102, 241, 0.25);
-}
-
-/* Button Variants */
-.btn-primary {
+.cyan-pill-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
-  background: var(--gradient-brand);
-  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-family: var(--font-code);
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(0, 245, 212, 0.08);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 245, 212, 0.25);
+}
+
+/* Spatial Theme Button Variants */
+.btn-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--accent-cyan);
+  color: #000000;
+  font-weight: 700;
   font-size: 0.95rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-glow-cyan);
   transition: var(--transition-smooth);
 }
 
-.btn-primary:hover {
+.btn-cyan:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(168, 85, 247, 0.5);
+  background: #26f6dc;
+  box-shadow: 0 0 35px rgba(0, 245, 212, 0.6);
 }
 
-.btn-secondary {
+.btn-dark-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.05);
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
   font-weight: 600;
   font-size: 0.95rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   transition: var(--transition-smooth);
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+.btn-dark-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
@@ -180,17 +200,17 @@ button {
 }
 
 .section-padding {
-  padding: 100px 0;
+  padding: 90px 0;
 }
 
 .section-header {
   text-align: center;
   max-width: 680px;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 50px auto;
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-top: 12px;
   margin-bottom: 16px;
 }
@@ -200,17 +220,12 @@ button {
   font-size: 1.1rem;
 }
 
-/* Keyframe Animations */
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
+/* Spatial Matrix Animation */
+@keyframes pulseCyan {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
 }
 
-@keyframes floatAnim {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-.float-slow {
-  animation: floatAnim 6s ease-in-out infinite;
+.glow-cyan-pulse {
+  animation: pulseCyan 3s ease-in-out infinite;
 }

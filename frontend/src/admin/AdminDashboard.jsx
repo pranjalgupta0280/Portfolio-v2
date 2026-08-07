@@ -465,6 +465,28 @@ export default function AdminDashboard({ onClose }) {
                 </div>
 
                 <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '6px' }}>Contact Phone</label>
+                  <input
+                    type="text"
+                    value={profileForm.phone || ''}
+                    onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                    placeholder="+1 (555) 000-0000"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '6px' }}>Location</label>
+                  <input
+                    type="text"
+                    value={profileForm.location || ''}
+                    onChange={(e) => setProfileForm({ ...profileForm, location: e.target.value })}
+                    placeholder="San Francisco, CA"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '6px' }}>GitHub Profile Link</label>
                   <input
                     type="text"
@@ -483,6 +505,17 @@ export default function AdminDashboard({ onClose }) {
                     style={inputStyle}
                   />
                 </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '6px' }}>Twitter / X Profile Link</label>
+                  <input
+                    type="text"
+                    value={profileForm.twitterUrl || ''}
+                    onChange={(e) => setProfileForm({ ...profileForm, twitterUrl: e.target.value })}
+                    style={inputStyle}
+                  />
+                </div>
+
 
                 <div style={{ gridColumn: 'span 2', marginTop: '10px' }}>
                   <button type="submit" className="btn-primary">
