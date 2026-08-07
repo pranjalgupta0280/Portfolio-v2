@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   User, Code2, Trophy, FolderPlus, MessageSquare, LogOut, Check, Trash2, Edit3, Plus,
-  Sparkles, Save, ShieldCheck, ArrowLeft, RefreshCw, Layers
+  Sparkles, Save, ShieldCheck, ArrowLeft, RefreshCw, Layers, GraduationCap, Award
 } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -33,6 +33,12 @@ export default function AdminDashboard({ onClose }) {
   const [dsaList, setDsaList] = useState(data.dsaProfiles || []);
   const [dsaForm, setDsaForm] = useState({ platform: 'Codeforces', handle: '', profileUrl: '', rating: '', solvedCount: '', badge: '' });
 
+  // Education & Achievements State
+  const [educationList, setEducationList] = useState(data.education || []);
+  const [eduForm, setEduForm] = useState({ institution: '', degree: '', duration: '', grade: '', description: '' });
+  const [achievementsList, setAchievementsList] = useState(data.achievements || []);
+  const [achForm, setAchForm] = useState({ title: '', organization: '', year: '', description: '' });
+
   // Messages Inbox State
   const [messages, setMessages] = useState([]);
 
@@ -41,7 +47,10 @@ export default function AdminDashboard({ onClose }) {
     setProjectsList(data.projects || []);
     setSkillsList(data.skills || []);
     setDsaList(data.dsaProfiles || []);
+    setEducationList(data.education || []);
+    setAchievementsList(data.achievements || []);
   }, [data]);
+
 
   useEffect(() => {
     if (activeTab === 'messages') {
@@ -180,6 +189,52 @@ export default function AdminDashboard({ onClose }) {
     }
   };
 
+  // --- Education & Achievements Handlers ---
+  const handleAddEducation = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/admin/education', eduForm, getAuthHeader());
+      setEduForm({ institution: '', degree: '', duration: '', grade: '', description: '' });
+      await refreshData();
+      showNotification('Education entry added!');
+    } catch (err) {
+      alert('Failed to add education entry.');
+    }
+  };
+
+  const handleDeleteEducation = async (id) => {
+    try {
+      await axios.delete(`/api/admin/education/${id}`, getAuthHeader());
+      await refreshData();
+      showNotification('Education entry deleted!');
+    } catch (err) {
+      alert('Failed to delete education.');
+    }
+  };
+
+  const handleAddAchievement = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/admin/achievements', achForm, getAuthHeader());
+      setAchForm({ title: '', organization: '', year: '', description: '' });
+      await refreshData();
+      showNotification('Achievement added!');
+    } catch (err) {
+      alert('Failed to add achievement.');
+    }
+  };
+
+  const handleDeleteAchievement = async (id) => {
+    try {
+      await axios.delete(`/api/admin/achievements/${id}`, getAuthHeader());
+      await refreshData();
+      showNotification('Achievement deleted!');
+    } catch (err) {
+      alert('Failed to delete achievement.');
+    }
+  };
+
+
   // --- Messages Handlers ---
   const handleDeleteMessage = async (id) => {
     try {
@@ -277,8 +332,10 @@ export default function AdminDashboard({ onClose }) {
             { id: 'projects', label: 'Projects Manager', icon: FolderPlus },
             { id: 'skills', label: 'Skills & Stack', icon: Code2 },
             { id: 'dsa', label: 'DSA Profiles', icon: Trophy },
+            { id: 'education', label: 'Education & Awards', icon: GraduationCap },
             { id: 'messages', label: 'Contact Messages', icon: MessageSquare }
           ].map((item) => {
+
             const Icon = item.icon;
             return (
               <button
@@ -754,8 +811,185 @@ export default function AdminDashboard({ onClose }) {
             </div>
           )}
 
+          {/* TAB: EDUCATION & ACHIEVEMENTS CMS */}
+          {activeTab === 'education' && (
+            <div style={{ maxWidth: '900px' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '24px' }}>Manage Education & Achievements</h3>
+
+              {/* Add Education Form */}
+              <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px' }}>
+                <h4 style={{ marginBottom: '16px', color: 'var(--accent-indigo)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <GraduationCap size={20} />
+                  <span>Add Education Entry</span>
+                </h4>
+                <form onSubmit={handleAddEducation} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Institution / University *</label>
+                    <input
+                      type="text"
+                      required
+                      value={eduForm.institution}
+                      onChange={(e) => setEduForm({ ...eduForm, institution: e.target.value })}
+                      placeholder="e.g. Stanford University"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Degree / Specialization *</label>
+                    <input
+                      type="text"
+                      required
+                      value={eduForm.degree}
+                      onChange={(e) => setEduForm({ ...eduForm, degree: e.target.value })}
+                      placeholder="e.g. B.S. in Computer Science"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Duration *</label>
+                    <input
+                      type="text"
+                      required
+                      value={eduForm.duration}
+                      onChange={(e) => setEduForm({ ...eduForm, duration: e.target.value })}
+                      placeholder="e.g. 2020 - 2024"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Grade / GPA</label>
+                    <input
+                      type="text"
+                      value={eduForm.grade}
+                      onChange={(e) => setEduForm({ ...eduForm, grade: e.target.value })}
+                      placeholder="e.g. 3.9 GPA"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Description</label>
+                    <input
+                      type="text"
+                      value={eduForm.description}
+                      onChange={(e) => setEduForm({ ...eduForm, description: e.target.value })}
+                      placeholder="Specialized in software systems, algorithms..."
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <button type="submit" className="btn-primary">
+                      <Plus size={16} />
+                      <span>Add Education Record</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Education List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
+                <h5 style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Education List</h5>
+                {educationList.map((edu) => (
+                  <div key={edu._id} className="glass-panel" style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <h4 style={{ fontSize: '1.05rem' }}>{edu.institution}</h4>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--accent-indigo)' }}>{edu.degree} ({edu.duration})</p>
+                      {edu.description && <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{edu.description}</p>}
+                    </div>
+                    <button onClick={() => handleDeleteEducation(edu._id)} style={{ color: '#f87171' }}>
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Add Achievement Form */}
+              <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px' }}>
+                <h4 style={{ marginBottom: '16px', color: 'var(--accent-pink)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Award size={20} />
+                  <span>Add Achievement / Award</span>
+                </h4>
+                <form onSubmit={handleAddAchievement} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Title *</label>
+                    <input
+                      type="text"
+                      required
+                      value={achForm.title}
+                      onChange={(e) => setAchForm({ ...achForm, title: e.target.value })}
+                      placeholder="e.g. 1st Place Hackathon Winner"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Organization / Issuer</label>
+                    <input
+                      type="text"
+                      value={achForm.organization}
+                      onChange={(e) => setAchForm({ ...achForm, organization: e.target.value })}
+                      placeholder="e.g. Meta AI / Codeforces"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Year</label>
+                    <input
+                      type="text"
+                      value={achForm.year}
+                      onChange={(e) => setAchForm({ ...achForm, year: e.target.value })}
+                      placeholder="e.g. 2024"
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Description</label>
+                    <input
+                      type="text"
+                      value={achForm.description}
+                      onChange={(e) => setAchForm({ ...achForm, description: e.target.value })}
+                      placeholder="Built a real-time document engine..."
+                      style={inputStyle}
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <button type="submit" className="btn-primary">
+                      <Plus size={16} />
+                      <span>Add Achievement Record</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Achievement List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h5 style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Achievements List</h5>
+                {achievementsList.map((ach) => (
+                  <div key={ach._id} className="glass-panel" style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <h4 style={{ fontSize: '1.05rem' }}>{ach.title} ({ach.year})</h4>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--accent-pink)' }}>{ach.organization}</p>
+                      {ach.description && <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{ach.description}</p>}
+                    </div>
+                    <button onClick={() => handleDeleteAchievement(ach._id)} style={{ color: '#f87171' }}>
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* TAB 5: CONTACT MESSAGES */}
           {activeTab === 'messages' && (
+
             <div style={{ maxWidth: '850px' }}>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Incoming Messages ({messages.length})</h3>
 

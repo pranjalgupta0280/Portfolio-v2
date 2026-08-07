@@ -15,9 +15,9 @@ export const PortfolioProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchPortfolioData = async () => {
+  const fetchPortfolioData = async (isInitial = false) => {
     try {
-      setLoading(true);
+      if (isInitial) setLoading(true);
       const res = await axios.get('/api/portfolio');
       setData(res.data);
       setError(null);
@@ -25,13 +25,14 @@ export const PortfolioProvider = ({ children }) => {
       console.error('Error loading portfolio:', err);
       setError('Failed to load portfolio data.');
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPortfolioData();
+    fetchPortfolioData(true);
   }, []);
+
 
   const sendContactMessage = async (formData) => {
     const res = await axios.post('/api/contact', formData);
