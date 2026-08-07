@@ -268,7 +268,7 @@ export default function Contact() {
                 type="submit"
                 disabled={status.loading}
                 className="btn-primary"
-                style={{ justifyContent: 'center', marginTop: '10px' }}
+                style={{ justifyContent: 'center', marginTop: '10px', color: '#fff' }}
               >
                 <Send size={16} />
                 <span>{status.loading ? 'Sending Message...' : 'Send Message'}</span>
