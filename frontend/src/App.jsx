@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import VideoBackground from './components/VideoBackground';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -33,7 +34,7 @@ export default function App() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: 'var(--bg-primary)',
+        background: '#07090e',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -56,12 +57,15 @@ export default function App() {
   }
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', background: 'var(--bg-primary)' }}>
+    <div style={{ position: 'relative', minHeight: '100vh', background: '#07090e' }}>
+      {/* Full-Screen DNA Video Background across ALL pages */}
+      <VideoBackground />
+
       {/* Public Glass Navbar */}
       <Navbar onOpenAdmin={handleOpenAdmin} />
 
       {/* Page Routes */}
-      <main>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

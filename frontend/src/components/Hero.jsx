@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Activity, Sparkles, Terminal, Download, Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { ArrowUpRight, Activity, Download, Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Hero() {
@@ -27,12 +27,12 @@ export default function Hero() {
   return (
     <section style={{
       position: 'relative',
-      paddingTop: '170px',
-      paddingBottom: '110px',
+      paddingTop: '160px',
+      paddingBottom: '90px',
       overflow: 'hidden'
     }}>
       {/* Top Header System Bar */}
-      <div className="container" style={{ marginBottom: '40px' }}>
+      <div className="container" style={{ marginBottom: '40px', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div className="tech-tag">
             <span>CREATIVE DEVELOPER / SYSTEM 01</span>
@@ -51,14 +51,14 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="container">
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
           gap: '48px',
           alignItems: 'center'
         }}>
-          {/* Left Spatial Content */}
+          {/* Left Content */}
           <div>
             <div style={{ marginBottom: '16px' }}>
               <span className="tech-tag" style={{ color: 'var(--accent-cyan)' }}>
@@ -84,7 +84,7 @@ export default function Hero() {
               {profile.shortIntro || 'I design and engineer digital experiences that make complex ideas feel immediate, tactile, and quietly inevitable.'}
             </p>
 
-            {/* Action Buttons matching reference */}
+            {/* Action Buttons */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
               <Link to="/projects" className="btn-cyan">
                 <span>Explore selected work</span>
@@ -109,29 +109,29 @@ export default function Hero() {
                 SYSTEM LINKS:
               </span>
               {profile.githubUrl && (
-                <a href={profile.githubUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', transition: 'var(--transition-fast)' }}>
+                <a href={profile.githubUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)' }}>
                   <Github size={18} />
                 </a>
               )}
               {profile.linkedinUrl && (
-                <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', transition: 'var(--transition-fast)' }}>
+                <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)' }}>
                   <Linkedin size={18} />
                 </a>
               )}
               {profile.twitterUrl && (
-                <a href={profile.twitterUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', transition: 'var(--transition-fast)' }}>
+                <a href={profile.twitterUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)' }}>
                   <Twitter size={18} />
                 </a>
               )}
               {profile.email && (
-                <a href={`mailto:${profile.email}`} style={{ color: 'var(--text-secondary)', transition: 'var(--transition-fast)' }}>
+                <a href={`mailto:${profile.email}`} style={{ color: 'var(--text-secondary)' }}>
                   <Mail size={18} />
                 </a>
               )}
             </div>
           </div>
 
-          {/* Right Spatial Live Interactive Widget */}
+          {/* Right Live Interactive Widget */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="glass-panel" style={{
               padding: '28px',
@@ -143,13 +143,11 @@ export default function Hero() {
               position: 'relative',
               boxShadow: 'var(--shadow-glass)'
             }}>
-              {/* Header inside widget */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                 <span className="tech-tag" style={{ fontSize: '0.7rem' }}>SPATIAL FIELD / LIVE</span>
                 <Activity size={18} style={{ color: 'var(--accent-purple)' }} />
               </div>
 
-              {/* Grid matrix blocks */}
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(6, 1fr)',
@@ -173,7 +171,6 @@ export default function Hero() {
                 ))}
               </div>
 
-              {/* Coordinates Monitor Footer */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -183,6 +180,7 @@ export default function Hero() {
                 paddingTop: '16px',
                 borderTop: '1px solid var(--border-subtle)'
               }}>
+
                 <span>X 041.6</span>
                 <span>Y 72.9</span>
                 <span>Z 00.4</span>
