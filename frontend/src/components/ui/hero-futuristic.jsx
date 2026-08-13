@@ -1,12 +1,12 @@
-import React, { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useRef, useMemo } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 const TEXTUREMAP = 'https://i.postimg.cc/XYwvXN8D/img-4.png';
 const DEPTHMAP = 'https://i.postimg.cc/2SHKQh2q/raw-4.webp';
 
-// Custom Futuristic WebGL Shader Material
+// Custom Futuristic WebGL Shader Material (Reddish Crimson Theme)
 const FuturisticShaderMaterial = {
   uniforms: {
     uTexture: { value: null },
@@ -32,22 +32,25 @@ const FuturisticShaderMaterial = {
 
     void main() {
       vec4 depth = texture2D(uDepth, vUv);
-      vec2 distortion = vUv + depth.r * uPointer * 0.03;
+      vec2 distortion = vUv + depth.r * uPointer * 0.035;
       vec4 texColor = texture2D(uTexture, distortion);
 
-      // Scanning Red Laser Line Effect
+      // Scanning Reddish Laser Beam Effect
       float scanY = uScanProgress;
       float distToScan = abs(vUv.y - scanY);
-      float scanLine = smoothstep(0.04, 0.0, distToScan);
-      vec3 laserColor = vec3(0.0, 0.96, 0.83) * scanLine * 1.8; // Neon Cyan Laser
+      float scanLine = smoothstep(0.045, 0.0, distToScan);
+      vec3 laserColor = vec3(1.0, 0.08, 0.25) * scanLine * 2.2; // Neon Crimson Laser
 
-      // Matrix Grid Glow
+      // Matrix Grid Glow (Reddish Ruby Dots)
       vec2 gridUv = fract(vUv * 80.0) - 0.5;
-      float dotGrid = smoothstep(0.48, 0.45, length(gridUv)) * depth.r * 0.4;
-      vec3 cyanDot = vec3(0.0, 0.96, 0.83) * dotGrid;
+      float dotGrid = smoothstep(0.48, 0.45, length(gridUv)) * depth.r * 0.45;
+      vec3 redDot = vec3(1.0, 0.15, 0.3) * dotGrid;
 
-      vec3 finalColor = texColor.rgb + laserColor + cyanDot;
-      gl_FragColor = vec4(finalColor, texColor.a * 0.85);
+      // Warm Crimson Tint Enhancement
+      vec3 redTint = vec3(1.25, 0.75, 0.85);
+      vec3 finalColor = (texColor.rgb * redTint) + laserColor + redDot;
+      
+      gl_FragColor = vec4(finalColor, texColor.a * 0.88);
     }
   `
 };
@@ -106,11 +109,11 @@ export default function FuturisticBackground() {
           <Scene />
         </React.Suspense>
       </Canvas>
-      {/* Subtle Dark Radial Gradient Mask */}
+      {/* Subtle Reddish Dark Radial Gradient Overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(circle at center, rgba(7, 9, 14, 0.3) 0%, rgba(7, 9, 14, 0.85) 100%)',
+        background: 'radial-gradient(circle at center, rgba(18, 5, 10, 0.25) 0%, rgba(7, 9, 14, 0.85) 100%)',
         pointerEvents: 'none'
       }} />
     </div>
