@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { ShieldCheck, Terminal, Sparkles } from 'lucide-react';
+import { ShieldCheck, Terminal } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar({ onOpenAdmin }) {
@@ -39,25 +40,27 @@ export default function Navbar({ onOpenAdmin }) {
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Brand Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', fontWeight: '800' }}>
-          <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '10px',
-            background: 'var(--accent-cyan)',
-            color: '#000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: '800',
-            boxShadow: 'var(--shadow-glow-cyan)'
-          }}>
-            <Terminal size={18} />
-          </div>
-          <span style={{ color: '#fff', fontFamily: 'var(--font-heading)' }}>
-            System<span style={{ color: 'var(--accent-cyan)' }}>.01</span>
-          </span>
-        </Link>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', fontWeight: '800' }}>
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '10px',
+              background: 'var(--accent-cyan)',
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: '800',
+              boxShadow: 'var(--shadow-glow-cyan)'
+            }}>
+              <Terminal size={18} />
+            </div>
+            <span style={{ color: '#fff', fontFamily: 'var(--font-heading)' }}>
+              System<span style={{ color: 'var(--accent-cyan)' }}>.01</span>
+            </span>
+          </Link>
+        </motion.div>
 
         {/* Navigation Links */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
@@ -74,12 +77,21 @@ export default function Navbar({ onOpenAdmin }) {
                 paddingBottom: '4px'
               })}
             >
-              {link.name}
+              {({ isActive }) => (
+                <motion.span 
+                  whileHover={{ y: -2, color: '#ffffff' }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {link.name}
+                </motion.span>
+              )}
             </NavLink>
           ))}
 
           {/* Admin Lock Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onOpenAdmin}
             style={{
               display: 'flex',
@@ -93,12 +105,12 @@ export default function Navbar({ onOpenAdmin }) {
               fontSize: '0.825rem',
               fontWeight: '600',
               cursor: 'pointer',
-              transition: 'var(--transition-smooth)'
+              boxShadow: isAuthenticated ? '0 0 15px rgba(16, 185, 129, 0.2)' : 'var(--shadow-glow-cyan)'
             }}
           >
             <ShieldCheck size={16} />
             <span>{isAuthenticated ? 'Admin Active' : 'Admin Portal'}</span>
-          </button>
+          </motion.button>
         </nav>
       </div>
     </header>

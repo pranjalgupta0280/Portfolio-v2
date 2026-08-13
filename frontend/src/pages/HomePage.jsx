@@ -3,7 +3,8 @@ import Hero from '../components/Hero';
 import Projects from '../components/Projects';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Code, Cpu, Trophy, Terminal } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function HomePage() {
   const { data } = usePortfolio();
@@ -23,32 +24,59 @@ export default function HomePage() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: '24px'
           }}>
-            <Link to="/projects" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="tech-tag">COLLECTION</span>
-                <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
-              </div>
-              <h3 style={{ fontSize: '2.4rem', color: '#fff' }}>{projects.length}+</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Production-ready SaaS Apps & Systems</p>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0, 245, 212, 0.2)' }}
+              style={{ borderRadius: '22px' }}
+            >
+              <Link to="/projects" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="tech-tag">COLLECTION</span>
+                  <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
+                </div>
+                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{projects.length}+</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Production-ready SaaS Apps & Systems</p>
+              </Link>
+            </motion.div>
 
-            <Link to="/skills" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="tech-tag">CAPABILITIES</span>
-                <ArrowUpRight size={20} style={{ color: 'var(--accent-purple)' }} />
-              </div>
-              <h3 style={{ fontSize: '2.4rem', color: '#fff' }}>{skills.length}+</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Technologies & Technical Skillsets</p>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(168, 85, 247, 0.2)' }}
+              style={{ borderRadius: '22px' }}
+            >
+              <Link to="/skills" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="tech-tag">CAPABILITIES</span>
+                  <ArrowUpRight size={20} style={{ color: 'var(--accent-purple)' }} />
+                </div>
+                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{skills.length}+</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Technologies & Technical Skillsets</p>
+              </Link>
+            </motion.div>
 
-            <Link to="/dsa" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="tech-tag">COMPETITIVE</span>
-                <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
-              </div>
-              <h3 style={{ fontSize: '2.4rem', color: '#fff' }}>{dsaProfiles.length}</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Algorithmic & Code Platforms</p>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0, 245, 212, 0.2)' }}
+              style={{ borderRadius: '22px' }}
+            >
+              <Link to="/dsa" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="tech-tag">COMPETITIVE</span>
+                  <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
+                </div>
+                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{dsaProfiles.length}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Algorithmic & Code Platforms</p>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
