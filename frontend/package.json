@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^9.121.5",
+    "@react-three/fiber": "^8.17.10",
     "@tailwindcss/postcss": "^4.0.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
@@ -19,7 +21,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.18.2",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

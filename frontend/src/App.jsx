@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import VideoBackground from './components/VideoBackground';
+import FuturisticBackground from './components/ui/hero-futuristic';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -58,8 +58,8 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: '#07090e' }}>
-      {/* Full-Screen DNA Video Background across ALL pages */}
-      <VideoBackground />
+      {/* 3D Futuristic WebGL Depth & Laser Scan Background */}
+      <FuturisticBackground />
 
       {/* Public Glass Navbar */}
       <Navbar onOpenAdmin={handleOpenAdmin} />
