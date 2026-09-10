@@ -92,6 +92,12 @@ button {
   background: none;
 }
 
+input, textarea, select {
+  font-family: inherit;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+}
+
 .kicker-tag {
   font-family: var(--font-main);
   font-size: 0.725rem;
@@ -202,10 +208,41 @@ button {
   line-height: 1.6;
 }
 
+/* Keyboard Badges (Stitch Design Specification) */
+kbd.kbd-badge {
+  font-family: var(--font-code);
+  font-size: 11px;
+  padding: 2px 6px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+
+/* Article / Writing Entry Row (Stitch Specification) */
+.writing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-hairline);
+  transition: var(--transition-fast);
+}
+
+.writing-row:hover {
+  border-bottom-color: var(--text-primary);
+}
+
+.writing-row:hover .writing-title {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
 /* Slide-wise Animation Wrapper */
 .slide-container {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
+
 

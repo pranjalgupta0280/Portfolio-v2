@@ -10,7 +10,8 @@ export const PortfolioProvider = ({ children }) => {
     education: [],
     achievements: [],
     dsaProfiles: [],
-    projects: []
+    projects: [],
+    blogs: []
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

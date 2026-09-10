@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Profile, Skill, Education, Achievement, DsaProfile, Project, Message } = require('../models/schemas');
+const { Profile, Skill, Education, Achievement, DsaProfile, Project, Blog, Message } = require('../models/schemas');
 
 // Get all consolidated portfolio public data
 router.get('/portfolio', async (req, res) => {
@@ -11,6 +11,7 @@ router.get('/portfolio', async (req, res) => {
     const achievements = await Achievement.find().sort({ order: 1, createdAt: 1 });
     const dsaProfiles = await DsaProfile.find().sort({ order: 1, createdAt: 1 });
     const projects = await Project.find().sort({ order: 1, createdAt: 1 });
+    const blogs = await Blog.find().sort({ order: 1, createdAt: -1 });
 
     res.json({
       profile: profile || {},
@@ -18,7 +19,8 @@ router.get('/portfolio', async (req, res) => {
       education,
       achievements,
       dsaProfiles,
-      projects
+      projects,
+      blogs
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching portfolio data', error: error.message });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Terminal } from 'lucide-react';
+import { ArrowUp, Square } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Footer() {
@@ -13,8 +13,8 @@ export default function Footer() {
   return (
     <footer style={{
       padding: '40px 0',
-      borderTop: '1px solid var(--border-subtle)',
-      background: 'rgba(9, 13, 22, 0.95)'
+      borderTop: '1px solid var(--border-hairline)',
+      background: 'var(--bg-primary)'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -23,48 +23,38 @@ export default function Footer() {
         flexWrap: 'wrap',
         gap: '20px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '32px',
-            height: '32px',
-            borderRadius: '8px',
-            background: 'var(--gradient-brand)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff'
-          }}>
-            <Terminal size={16} />
-          </div>
-          <span style={{ fontWeight: '700', fontSize: '1rem' }}>{profile.name || 'Portfolio'}</span>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            © {new Date().getFullYear()} All rights reserved.
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Square size={14} fill="var(--text-primary)" style={{ color: 'var(--text-primary)' }} />
+          <span style={{ fontWeight: '600', fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+            {profile.name || 'Portfolio'}
+          </span>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>
+            © {new Date().getFullYear()} • Crafted with editorial intent.
           </span>
         </div>
 
-        <button
-          onClick={scrollToTop}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-full)',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid var(--border-subtle)',
-            color: 'var(--text-secondary)',
-            fontSize: '0.85rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'var(--transition-fast)'
-          }}
-          onMouseEnter={(e) => (e.target.style.color = '#fff')}
-          onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
-        >
-          <span>Back to top</span>
-          <ArrowUp size={16} />
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+            <span>Shortcut</span>
+            <kbd className="kbd-badge">Shift</kbd>
+            <span>+</span>
+            <kbd className="kbd-badge">↑</kbd>
+          </div>
+
+          <button
+            onClick={scrollToTop}
+            className="btn-outline"
+            style={{
+              padding: '6px 12px',
+              fontSize: '0.8rem'
+            }}
+          >
+            <span>Top</span>
+            <ArrowUp size={14} />
+          </button>
+        </div>
       </div>
     </footer>
   );
 }
+

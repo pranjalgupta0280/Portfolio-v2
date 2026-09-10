@@ -73,6 +73,21 @@ const projectSchema = new mongoose.Schema({
   order: { type: Number, default: 0 }
 }, { timestamps: true });
 
+// Blog Schema
+const blogSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
+  subtitle: { type: String, default: '' },
+  content: { type: String, required: true },
+  coverImageUrl: { type: String, default: '' },
+  category: { type: String, default: 'Engineering' },
+  tags: [{ type: String }],
+  publishedDate: { type: String, default: '' },
+  readTime: { type: String, default: '5 min' },
+  featured: { type: Boolean, default: false },
+  order: { type: Number, default: 0 }
+}, { timestamps: true });
+
 // Message Schema
 const messageSchema = new mongoose.Schema({
   senderName: { type: String, required: true },
@@ -95,6 +110,7 @@ module.exports = {
   Achievement: mongoose.model('Achievement', achievementSchema),
   DsaProfile: mongoose.model('DsaProfile', dsaProfileSchema),
   Project: mongoose.model('Project', projectSchema),
+  Blog: mongoose.model('Blog', blogSchema),
   Message: mongoose.model('Message', messageSchema),
   Admin: mongoose.model('Admin', adminSchema)
 };

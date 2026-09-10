@@ -22,6 +22,7 @@ export default function Navbar({ onOpenAdmin }) {
     { name: 'Skills', path: '/skills' },
     { name: 'DSA', path: '/dsa' },
     { name: 'Projects', path: '/projects' },
+    { name: 'Blogs', path: '/blogs' },
     { name: 'Contact', path: '/contact' },
   ];
 

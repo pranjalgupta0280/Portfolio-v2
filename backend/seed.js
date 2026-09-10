@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const dns = require('dns');
 require('dotenv').config();
-const { Profile, Skill, Education, Achievement, DsaProfile, Project, Admin } = require('./models/schemas');
+const { Profile, Skill, Education, Achievement, DsaProfile, Project, Blog, Admin } = require('./models/schemas');
 
 try {
   dns.setDefaultResultOrder('ipv4first');
@@ -30,6 +30,7 @@ const seedData = async () => {
     await Achievement.deleteMany({});
     await DsaProfile.deleteMany({});
     await Project.deleteMany({});
+    await Blog.deleteMany({});
     await Admin.deleteMany({});
 
     // 1. Seed Admin
@@ -45,19 +46,19 @@ const seedData = async () => {
 
     // 2. Seed Profile
     await Profile.create({
-      name: "Alex Dev",
-      title: "Senior Full Stack & AI Systems Engineer",
-      shortIntro: "Crafting modern SaaS platforms, high-performance distributed web systems, and intuitive user experiences with extreme precision.",
-      bio: "I am a passionate Full Stack Software Engineer with over 4 years of experience building web applications, scalable REST/GraphQL APIs, cloud infrastructure, and AI-powered interfaces. I specialize in React, Node.js, Next.js, TypeScript, and database optimization.",
+      name: "Pranjal Gupta",
+      title: "Full Stack Developer & Competitive Programmer",
+      shortIntro: "Building scalable web platforms, high-performance backend systems, and solving complex algorithmic challenges.",
+      bio: "Full Stack Developer and Computer Science undergraduate passionate about building fast, reliable software and competing in algorithm contests.",
       avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
       coverImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80",
-      resumeUrl: "https://example.com/alex-dev-resume.pdf",
-      email: "alex.dev@example.com",
-      phone: "+1 (555) 234-5678",
-      location: "San Francisco, CA",
-      githubUrl: "https://github.com",
-      linkedinUrl: "https://linkedin.com",
-      twitterUrl: "https://twitter.com"
+      resumeUrl: "https://example.com/pranjal-gupta-resume.pdf",
+      email: "pranjalgupta0280@gmail.com",
+      phone: "+91 9876543210",
+      location: "India",
+      githubUrl: "https://github.com/pranjalgupta0280",
+      linkedinUrl: "https://linkedin.com/in/pranjalgupta0280",
+      twitterUrl: "https://twitter.com/pranjalgupta0280"
     });
     console.log('Profile seeded.');
 
@@ -219,6 +220,51 @@ const seedData = async () => {
     ];
     await Project.insertMany(projectsData);
     console.log('Projects seeded.');
+
+    // 8. Seed Demo Blogs
+    const blogsData = [
+      {
+        title: "Architecting High-Throughput Micro-Frontends with Vite & React",
+        slug: "architecting-high-throughput-micro-frontends",
+        subtitle: "How to decouple large scale web clients for 10x faster deployment cycles",
+        content: "Micro-frontend architectures have evolved from experimental patterns into mission-critical infrastructure for modern engineering organizations.\n\nIn this technical article, we explore how Vite's module federation capabilities enable seamless code sharing, dynamic runtime component loading, and sub-100ms cold builds across multiple autonomous teams.\n\n### Key Takeaways:\n- Splitting monolith bundle graphs without losing global state synchronization\n- Shared dependency caching strategies with HTTP/3\n- Establishing contract-driven prop interfaces across isolated deployments",
+        coverImageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+        category: "Architecture",
+        tags: ["React", "Vite", "Micro-Frontends", "Performance"],
+        publishedDate: "SEP 2026",
+        readTime: "5 min",
+        featured: true,
+        order: 1
+      },
+      {
+        title: "Restraint in Digital Craft: A Case for Monochromatic Systems",
+        slug: "restraint-in-digital-craft-monochromatic-systems",
+        subtitle: "Why high-contrast editorial typography beats garish visual noise in software products",
+        content: "Modern UI design often suffers from visual saturation—drowning the user in artificial gradients, heavy drop-shadows, and competing accent colors.\n\nBy adopting a disciplined Swiss editorial approach with Geist typography, hairline dividers (#E5E7EB), and stark monochrome contrast (#111827 on #F8F9FA), web applications achieve exceptional signal-to-noise ratio and timeless elegance.\n\n### Core Principles:\n- Let content scale define hierarchy\n- Eliminate decorative elevation in favor of tonal surface shifts\n- Leverage optical tracking for wide kicker labels",
+        coverImageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
+        category: "UI & Design",
+        tags: ["Design Systems", "Minimalism", "Typography", "CSS"],
+        publishedDate: "AUG 2026",
+        readTime: "7 min",
+        featured: true,
+        order: 2
+      },
+      {
+        title: "Algorithmic Optimization Patterns in Modern Web Clients",
+        slug: "algorithmic-optimization-patterns-web-clients",
+        subtitle: "Applying DSA fundamentals to front-end state management and canvas rendering",
+        content: "Data structures and algorithms are not just for whiteboard interviews—they are essential for building fluid 60fps web applications handling complex data sets.\n\nWe break down practical applications of Trie search indices for real-time auto-complete, Segment Trees for fast range queries, and Spatial Hashing for WebGL canvas particle physics.",
+        coverImageUrl: "https://images.unsplash.com/photo-1516116211223-48a122638e59?auto=format&fit=crop&w=1200&q=80",
+        category: "Algorithms",
+        tags: ["DSA", "JavaScript", "Optimization", "State Management"],
+        publishedDate: "JUL 2026",
+        readTime: "4 min",
+        featured: false,
+        order: 3
+      }
+    ];
+    await Blog.insertMany(blogsData);
+    console.log('Demo Blogs seeded.');
 
     console.log('Seeding completed successfully!');
     process.exit(0);

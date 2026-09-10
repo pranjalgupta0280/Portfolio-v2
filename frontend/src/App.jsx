@@ -16,6 +16,8 @@ import AdminDashboard from './admin/AdminDashboard';
 import { useAuth } from './context/AuthContext';
 import { usePortfolio } from './context/PortfolioContext';
 
+import BlogsPage from './pages/BlogsPage';
+
 export default function App() {
   const { isAuthenticated } = useAuth();
   const { loading } = usePortfolio();
@@ -79,6 +81,8 @@ export default function App() {
               <Route path="/skills" element={<SkillsPage />} />
               <Route path="/dsa" element={<DsaPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/blogs" element={<BlogsPage />} />
+              <Route path="/blogs/:slug" element={<BlogsPage />} />
               <Route path="/contact" element={<ContactPage />} />
             </Routes>
           </motion.div>

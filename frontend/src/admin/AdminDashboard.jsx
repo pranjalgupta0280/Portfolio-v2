@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   User, Code2, Trophy, FolderPlus, MessageSquare, LogOut, Check, Trash2, Edit3, Plus,
-  Sparkles, Save, ShieldCheck, ArrowLeft, RefreshCw, Layers, GraduationCap, Award
+  Sparkles, Save, ShieldCheck, ArrowLeft, RefreshCw, Layers, GraduationCap, Award, BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
@@ -26,6 +26,14 @@ export default function AdminDashboard({ onClose }) {
     category: 'Full Stack', techStack: '', githubUrl: '', liveDemoUrl: '', featured: false
   });
 
+  // Blogs Editor State
+  const [blogsList, setBlogsList] = useState(data.blogs || []);
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [blogForm, setBlogForm] = useState({
+    title: '', subtitle: '', category: 'Engineering', readTime: '5 min read',
+    coverImageUrl: '', tags: '', content: '', featured: false
+  });
+
   // Skills Editor State
   const [skillsList, setSkillsList] = useState(data.skills || []);
   const [skillForm, setSkillForm] = useState({ name: '', category: 'Frontend', proficiency: 85, icon: 'Code' });
@@ -46,6 +54,7 @@ export default function AdminDashboard({ onClose }) {
   useEffect(() => {
     setProfileForm(data.profile || {});
     setProjectsList(data.projects || []);
+    setBlogsList(data.blogs || []);
     setSkillsList(data.skills || []);
     setDsaList(data.dsaProfiles || []);
     setEducationList(data.education || []);
@@ -141,6 +150,54 @@ export default function AdminDashboard({ onClose }) {
     setProjectForm({
       ...proj,
       techStack: Array.isArray(proj.techStack) ? proj.techStack.join(', ') : proj.techStack
+    });
+  };
+
+  // --- Blogs Handlers ---
+  const handleSaveBlog = async (e) => {
+    e.preventDefault();
+    try {
+      const tagsArray = typeof blogForm.tags === 'string'
+        ? blogForm.tags.split(',').map(s => s.trim()).filter(Boolean)
+        : blogForm.tags;
+
+      const payload = { ...blogForm, tags: tagsArray };
+
+      if (editingBlog) {
+        await axios.put(`/api/admin/blogs/${editingBlog._id}`, payload, getAuthHeader());
+        showNotification('Blog post updated!');
+      } else {
+        await axios.post('/api/admin/blogs', payload, getAuthHeader());
+        showNotification('New blog post published!');
+      }
+
+      setEditingBlog(null);
+      setBlogForm({
+        title: '', subtitle: '', category: 'Engineering', readTime: '5 min read',
+        coverImageUrl: '', tags: '', content: '', featured: false
+      });
+      await refreshData();
+    } catch (err) {
+      alert('Failed to save blog post: ' + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const handleDeleteBlog = async (id) => {
+    if (!window.confirm('Delete this blog post?')) return;
+    try {
+      await axios.delete(`/api/admin/blogs/${id}`, getAuthHeader());
+      await refreshData();
+      showNotification('Blog post deleted!');
+    } catch (err) {
+      alert('Failed to delete blog post.');
+    }
+  };
+
+  const startEditBlog = (b) => {
+    setEditingBlog(b);
+    setBlogForm({
+      ...b,
+      tags: Array.isArray(b.tags) ? b.tags.join(', ') : b.tags
     });
   };
 
@@ -328,6 +385,7 @@ export default function AdminDashboard({ onClose }) {
           {[
             { id: 'profile', label: 'Personal Details', icon: User },
             { id: 'projects', label: 'Projects Manager', icon: FolderPlus },
+            { id: 'blogs', label: 'Blogs & Writing', icon: BookOpen },
             { id: 'skills', label: 'Skills & Stack', icon: Code2 },
             { id: 'dsa', label: 'DSA Profiles', icon: Trophy },
             { id: 'education', label: 'Education & Awards', icon: GraduationCap },
@@ -686,6 +744,175 @@ export default function AdminDashboard({ onClose }) {
                         <Edit3 size={16} />
                       </button>
                       <button onClick={() => handleDeleteProject(proj._id)} style={{ padding: '8px', color: '#f87171' }}>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: BLOGS MANAGER */}
+          {activeTab === 'blogs' && (
+            <div style={{ maxWidth: '900px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                <h3 style={{ fontSize: '1.5rem' }}>Manage Blog Articles</h3>
+                {editingBlog && (
+                  <button
+                    onClick={() => {
+                      setEditingBlog(null);
+                      setBlogForm({ title: '', subtitle: '', category: 'Engineering', readTime: '5 min read', coverImageUrl: '', tags: '', content: '', featured: false });
+                    }}
+                    className="btn-outline"
+                    style={{ fontSize: '0.8rem', padding: '4px 10px' }}
+                  >
+                    + Write New Article
+                  </button>
+                )}
+              </div>
+
+              {/* Form to Create/Edit Blog */}
+              <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px' }}>
+                <h4 style={{ fontSize: '1.1rem', marginBottom: '16px' }}>
+                  {editingBlog ? `Edit Article: "${editingBlog.title}"` : 'Create & Publish New Blog Article'}
+                </h4>
+                <form onSubmit={handleSaveBlog} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Article Title</label>
+                    <input
+                      type="text"
+                      required
+                      value={blogForm.title}
+                      onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
+                      style={inputStyle}
+                      placeholder="e.g. Scaling Systems to 100k QPS"
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Subtitle / Excerpt</label>
+                    <input
+                      type="text"
+                      required
+                      value={blogForm.subtitle}
+                      onChange={(e) => setBlogForm({ ...blogForm, subtitle: e.target.value })}
+                      style={inputStyle}
+                      placeholder="Brief summary of the article..."
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Category</label>
+                    <select
+                      value={blogForm.category}
+                      onChange={(e) => setBlogForm({ ...blogForm, category: e.target.value })}
+                      style={inputStyle}
+                    >
+                      <option value="Engineering">Engineering</option>
+                      <option value="Architecture">Architecture</option>
+                      <option value="Frontend">Frontend</option>
+                      <option value="Database">Database</option>
+                      <option value="Tutorial">Tutorial</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Read Time</label>
+                    <input
+                      type="text"
+                      value={blogForm.readTime}
+                      onChange={(e) => setBlogForm({ ...blogForm, readTime: e.target.value })}
+                      style={inputStyle}
+                      placeholder="e.g. 5 min read"
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Cover Image URL / Local Image</label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={blogForm.coverImageUrl}
+                        onChange={(e) => setBlogForm({ ...blogForm, coverImageUrl: e.target.value })}
+                        style={{ ...inputStyle, flex: 1 }}
+                        placeholder="https://images.unsplash.com/..."
+                      />
+                      <label className="btn-outline" style={{ cursor: 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center' }}>
+                        Browse File
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={(e) => handleImageUpload(e.target.files[0], (url) => setBlogForm({ ...blogForm, coverImageUrl: url }))}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Tags (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={blogForm.tags}
+                      onChange={(e) => setBlogForm({ ...blogForm, tags: e.target.value })}
+                      style={inputStyle}
+                      placeholder="Node.js, MongoDB, Performance"
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Article Content (Markdown supported)</label>
+                    <textarea
+                      required
+                      rows={8}
+                      value={blogForm.content}
+                      onChange={(e) => setBlogForm({ ...blogForm, content: e.target.value })}
+                      style={{ ...inputStyle, fontFamily: 'monospace' }}
+                      placeholder="Write your article content here..."
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      type="checkbox"
+                      id="featuredBlog"
+                      checked={blogForm.featured}
+                      onChange={(e) => setBlogForm({ ...blogForm, featured: e.target.checked })}
+                    />
+                    <label htmlFor="featuredBlog" style={{ fontSize: '0.85rem' }}>Feature on Blogs Page Top</label>
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2', marginTop: '10px' }}>
+                    <button type="submit" className="btn-primary">
+                      <Save size={16} />
+                      <span>{editingBlog ? 'Update Article' : 'Publish Article'}</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Blogs List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {blogsList.map((b) => (
+                  <div key={b._id} className="glass-panel" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <img src={b.coverImageUrl} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                      <div>
+                        <h4 style={{ fontSize: '1rem', color: 'var(--text-primary)' }}>{b.title}</h4>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '2px' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{b.category}</span>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>• {b.readTime}</span>
+                          {b.featured && <span className="kicker-tag" style={{ fontSize: '0.65rem', padding: '1px 5px' }}>FEATURED</span>}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button onClick={() => startEditBlog(b)} className="btn-secondary" style={{ padding: '8px' }}>
+                        <Edit3 size={16} />
+                      </button>
+                      <button onClick={() => handleDeleteBlog(b._id)} style={{ padding: '8px', color: '#f87171' }}>
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -1072,10 +1299,10 @@ export default function AdminDashboard({ onClose }) {
 const inputStyle = {
   width: '100%',
   padding: '10px 14px',
-  borderRadius: 'var(--radius-md)',
-  background: 'rgba(255, 255, 255, 0.04)',
-  border: '1px solid var(--border-subtle)',
-  color: '#fff',
+  borderRadius: 'var(--radius-sm)',
+  background: 'var(--bg-surface)',
+  border: '1px solid var(--border-hairline)',
+  color: 'var(--text-primary)',
   outline: 'none',
   fontSize: '0.9rem'
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/auth');
-const { Profile, Skill, Education, Achievement, DsaProfile, Project, Message } = require('../models/schemas');
+const { Profile, Skill, Education, Achievement, DsaProfile, Project, Blog, Message } = require('../models/schemas');
 
 // Apply auth middleware to all admin routes
 router.use(verifyToken);
@@ -164,6 +164,52 @@ router.delete('/projects/:id', async (req, res) => {
     res.json({ message: 'Project deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to delete project', error: error.message });
+  }
+});
+
+// --- Blog Routes ---
+router.post('/blogs', async (req, res) => {
+  try {
+    const { title, slug, subtitle, content, coverImageUrl, category, tags, readTime, featured } = req.body;
+    const blogSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    const blog = new Blog({
+      title,
+      slug: blogSlug,
+      subtitle: subtitle || '',
+      content,
+      coverImageUrl: coverImageUrl || '',
+      category: category || 'Engineering',
+      tags: Array.isArray(tags) ? tags : (tags ? tags.split(',').map(t => t.trim()) : []),
+      publishedDate: new Date().toLocaleDateString('en-US', { month: 'SHORT', year: 'NUMERIC' }).toUpperCase(),
+      readTime: readTime || '5 min',
+      featured: !!featured
+    });
+    await blog.save();
+    res.status(201).json(blog);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create blog post', error: error.message });
+  }
+});
+
+router.put('/blogs/:id', async (req, res) => {
+  try {
+    const updateData = { ...req.body };
+    if (typeof updateData.tags === 'string') {
+      updateData.tags = updateData.tags.split(',').map(t => t.trim());
+    }
+    const blog = await Blog.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    res.json(blog);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update blog post', error: error.message });
+  }
+});
+
+router.delete('/blogs/:id', async (req, res) => {
+  try {
+    await Blog.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Blog post deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete blog post', error: error.message });
   }
 });
 

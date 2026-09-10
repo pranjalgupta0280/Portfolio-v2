@@ -3,86 +3,77 @@ import Hero from '../components/Hero';
 import Projects from '../components/Projects';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Command } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function HomePage() {
   const { data } = usePortfolio();
-  const skills = data.skills || [];
-  const projects = data.projects || [];
-  const dsaProfiles = data.dsaProfiles || [];
+  const blogs = data?.blogs || [];
 
   return (
     <div>
       <Hero />
 
-      {/* Spatial Systems Metrics Teaser */}
-      <section className="section-padding" style={{ position: 'relative', borderTop: '1px solid var(--border-subtle)' }}>
-        <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '24px'
-          }}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0, 245, 212, 0.2)' }}
-              style={{ borderRadius: '22px' }}
-            >
-              <Link to="/projects" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="tech-tag">COLLECTION</span>
-                  <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
-                </div>
-                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{projects.length}+</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Production-ready SaaS Apps & Systems</p>
-              </Link>
-            </motion.div>
+      {/* Writing / Technical Notes Section */}
+      {blogs.length > 0 && (
+        <section className="section-padding" style={{ borderBottom: '1px solid var(--border-hairline)' }}>
+          <div className="container">
+            <div className="section-header" style={{ marginBottom: '24px' }}>
+              <span className="kicker-tag">MEMOIRS & ESSAYS</span>
+              <h2 className="section-title">Writing & Notes</h2>
+              <p className="section-subtitle">
+                Thoughts on software engineering, UI restraint, and system design.
+              </p>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(168, 85, 247, 0.2)' }}
-              style={{ borderRadius: '22px' }}
-            >
-              <Link to="/skills" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="tech-tag">CAPABILITIES</span>
-                  <ArrowUpRight size={20} style={{ color: 'var(--accent-purple)' }} />
-                </div>
-                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{skills.length}+</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Technologies & Technical Skillsets</p>
-              </Link>
-            </motion.div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '32px' }}>
+              {blogs.slice(0, 4).map((item) => (
+                <Link
+                  key={item._id || item.slug}
+                  to={`/blogs/${item.slug}`}
+                  className="writing-row"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <BookOpen size={15} style={{ color: 'var(--text-tertiary)' }} />
+                    <span className="writing-title" style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)' }}>
+                      {item.title}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>
+                    <span>{item.readTime}</span>
+                    <span style={{ fontFamily: 'var(--font-code)' }}>{item.publishedDate}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0, 245, 212, 0.2)' }}
-              style={{ borderRadius: '22px' }}
-            >
-              <Link to="/dsa" className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', borderRadius: '22px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="tech-tag">COMPETITIVE</span>
-                  <ArrowUpRight size={20} style={{ color: 'var(--accent-cyan)' }} />
-                </div>
-                <h3 style={{ fontSize: '2.6rem', color: '#fff', fontFamily: 'var(--font-code)' }}>{dsaProfiles.length}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Algorithmic & Code Platforms</p>
-              </Link>
-            </motion.div>
+            {/* Stitch Kbd Shortcut Feature Badge */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 16px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-hairline)',
+              background: 'var(--bg-surface)',
+              fontSize: '0.8rem',
+              color: 'var(--text-secondary)'
+            }}>
+              <Command size={14} />
+              <span>Press</span>
+              <kbd className="kbd-badge">⌘</kbd>
+              <span>+</span>
+              <kbd className="kbd-badge">K</kbd>
+              <span>to open quick navigation</span>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Featured Projects Preview */}
       <Projects />
     </div>
   );
 }
+
