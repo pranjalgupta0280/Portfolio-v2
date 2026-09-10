@@ -53,17 +53,17 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Call to Actions & Embedded Interactive Resume Preview Modal Button */}
+        {/* Call to Actions & Resume Dedicated Page Link */}
         <motion.div 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '44px' }}
         >
-          <button onClick={() => setResumeModalOpen(true)} className="btn-primary">
+          <Link to="/resume" className="btn-primary">
             <FileText size={16} />
             <span>View Resume</span>
-          </button>
+          </Link>
 
           <Link to="/projects" className="btn-outline">
             <span>Explore Projects</span>

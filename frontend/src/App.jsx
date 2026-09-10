@@ -17,6 +17,7 @@ import { useAuth } from './context/AuthContext';
 import { usePortfolio } from './context/PortfolioContext';
 
 import BlogsPage from './pages/BlogsPage';
+import ResumePage from './pages/ResumePage';
 
 export default function App() {
   const { isAuthenticated } = useAuth();
@@ -83,6 +84,7 @@ export default function App() {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/blogs" element={<BlogsPage />} />
               <Route path="/blogs/:slug" element={<BlogsPage />} />
+              <Route path="/resume" element={<ResumePage />} />
               <Route path="/contact" element={<ContactPage />} />
             </Routes>
           </motion.div>
