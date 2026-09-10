@@ -23,13 +23,12 @@ const seedData = async () => {
     }
 
 
-    // Clear existing collections
+    // Clear existing collections except user projects
     await Profile.deleteMany({});
     await Skill.deleteMany({});
     await Education.deleteMany({});
     await Achievement.deleteMany({});
     await DsaProfile.deleteMany({});
-    await Project.deleteMany({});
     await Blog.deleteMany({});
     await Admin.deleteMany({});
 
@@ -47,15 +46,15 @@ const seedData = async () => {
     // 2. Seed Profile
     await Profile.create({
       name: "Pranjal Gupta",
-      title: "Full Stack Developer & Competitive Programmer",
-      shortIntro: "Building scalable web platforms, high-performance backend systems, and solving complex algorithmic challenges.",
-      bio: "Full Stack Developer and Computer Science undergraduate passionate about building fast, reliable software and competing in algorithm contests.",
+      title: "Full Stack Engineer & Agentic AI Systems Developer",
+      shortIntro: "Building scalable web platforms, agentic RAG architectures, multi-tenant B2B systems, and high-performance competitive algorithms.",
+      bio: "Computer Science and Engineering student at JSS Academy of Technical Education, Noida. Specializing in Full Stack Web Development (React, Node.js, Express, MongoDB, Next.js), AI & Agentic Systems (LangChain, LangGraph, Agentic RAG, Qdrant, NeMo Guardrails), and Competitive Programming (Codeforces Pupil 1324, LeetCode Knight 1871, CodeChef 3-Star).",
       avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
       coverImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80",
-      resumeUrl: "https://example.com/pranjal-gupta-resume.pdf",
+      resumeUrl: "https://raw.githubusercontent.com/pranjalgupta0280/Portfolio-v2/main/resume.pdf",
       email: "pranjalgupta0280@gmail.com",
-      phone: "+91 9876543210",
-      location: "India",
+      phone: "+91 7007855590",
+      location: "Noida, Uttar Pradesh, India",
       githubUrl: "https://github.com/pranjalgupta0280",
       linkedinUrl: "https://linkedin.com/in/pranjalgupta0280",
       twitterUrl: "https://twitter.com/pranjalgupta0280"
@@ -64,15 +63,15 @@ const seedData = async () => {
 
     // 3. Seed Skills
     const skillsData = [
-      { name: "React / Next.js", category: "Frontend", proficiency: 95, icon: "Layout", order: 1 },
-      { name: "TypeScript", category: "Languages & CS", proficiency: 92, icon: "Code", order: 2 },
-      { name: "Node.js & Express", category: "Backend", proficiency: 90, icon: "Server", order: 3 },
-      { name: "MongoDB & Mongoose", category: "Database", proficiency: 88, icon: "Database", order: 4 },
-      { name: "PostgreSQL & Prisma", category: "Database", proficiency: 85, icon: "Database", order: 5 },
-      { name: "Tailwind / Vanilla CSS", category: "Frontend", proficiency: 96, icon: "Palette", order: 6 },
-      { name: "Docker & AWS", category: "DevOps & Cloud", proficiency: 80, icon: "Cloud", order: 7 },
-      { name: "Data Structures & Algo", category: "Languages & CS", proficiency: 94, icon: "Cpu", order: 8 },
-      { name: "Git & CI/CD", category: "Tools & Others", proficiency: 90, icon: "GitBranch", order: 9 }
+      { name: "React / Next.js / SCSS", category: "Frontend", proficiency: 95, icon: "Layout", order: 1 },
+      { name: "Node.js & Express", category: "Backend", proficiency: 92, icon: "Server", order: 2 },
+      { name: "MongoDB, Mongoose & Transactions", category: "Database", proficiency: 90, icon: "Database", order: 3 },
+      { name: "Python / C++ / TypeScript", category: "Languages & CS", proficiency: 94, icon: "Code", order: 4 },
+      { name: "LangChain & LangGraph (Agentic RAG)", category: "AI & Agentic Systems", proficiency: 88, icon: "Cpu", order: 5 },
+      { name: "Qdrant Vector Search & NeMo Guardrails", category: "AI & Agentic Systems", proficiency: 86, icon: "Database", order: 6 },
+      { name: "Socket.IO & WebSockets", category: "Backend", proficiency: 88, icon: "Server", order: 7 },
+      { name: "Docker, Git & CI/CD", category: "DevOps & Tools", proficiency: 85, icon: "Cloud", order: 8 },
+      { name: "Data Structures & Algorithms", category: "Languages & CS", proficiency: 95, icon: "Cpu", order: 9 }
     ];
     await Skill.insertMany(skillsData);
     console.log('Skills seeded.');
@@ -80,19 +79,19 @@ const seedData = async () => {
     // 4. Seed Education
     const educationData = [
       {
-        institution: "Stanford University",
-        degree: "B.S. in Computer Science (Software Systems)",
-        duration: "2020 - 2024",
-        grade: "3.92 / 4.0 GPA",
-        description: "Specialized in Distributed Operating Systems, Algorithm Analysis, and Web System Design.",
+        institution: "JSS Academy of Technical Education",
+        degree: "Bachelor of Technology in Computer Science and Engineering",
+        duration: "2023 - Present",
+        grade: "Noida, Uttar Pradesh",
+        description: "Coursework: Data Structures & Algorithms, AI & Machine Learning, Operating Systems, Software Engineering, Database Management Systems, Object-Oriented Programming.",
         order: 1
       },
       {
-        institution: "Tech Academy High",
-        degree: "High School Diploma with Computer Honors",
-        duration: "2016 - 2020",
-        grade: "Valedictorian",
-        description: "President of Coding Club, National Science Fair Top Finalist.",
+        institution: "United Public School",
+        degree: "High School Diploma",
+        duration: "March 2010 - April 2023",
+        grade: "93 / 100 (93%)",
+        description: "Kanpur, Uttar Pradesh. Completed High School with distinction and excellence in Mathematics & Computer Science.",
         order: 2
       }
     ];
@@ -102,25 +101,32 @@ const seedData = async () => {
     // 5. Seed Achievements
     const achievementData = [
       {
-        title: "Global Hackathon 1st Place Winner",
-        organization: "Meta AI Challenge",
+        title: "Meta Hacker Cup Global Rank",
+        organization: "Meta",
         year: "2024",
-        description: "Built an open-source real-time document intelligence engine serving 10k+ requests/min.",
+        description: "Achieved Global Rank 4700 in Round 1 and Global Rank 3100 in Round 2 of Meta Hacker Cup.",
         order: 1
       },
       {
-        title: "Candidate Master (Top 2% Globally)",
-        organization: "Codeforces",
-        year: "2023",
-        description: "Reached Max Rating 1940+ in competitive programming algorithms.",
+        title: "LeetCode Knight (1871 Rating)",
+        organization: "LeetCode",
+        year: "2024",
+        description: "Ranked as Knight on LeetCode with top contest rating 1871 and hundreds of algorithms solved.",
         order: 2
       },
       {
-        title: "Open Source Contributor Award",
-        organization: "React Ecosystem Foundation",
-        year: "2023",
-        description: "Maintained core utility plugins used by over 50,000 active projects.",
+        title: "Codeforces Pupil & CodeChef 3-Star",
+        organization: "Codeforces & CodeChef",
+        year: "2024",
+        description: "Codeforces rating 1324 (Pupil) and CodeChef 3-Star Competitive Programmer.",
         order: 3
+      },
+      {
+        title: "SHASTRA Programming Contest Finalist",
+        organization: "IIT Madras",
+        year: "2024",
+        description: "Selected as Finalist in the national level SHASTRA Programming Contest hosted by IIT Madras.",
+        order: 4
       }
     ];
     await Achievement.insertMany(achievementData);
@@ -129,47 +135,47 @@ const seedData = async () => {
     // 6. Seed DSA Profiles
     const dsaData = [
       {
-        platform: "Codeforces",
-        handle: "alex_coder",
-        profileUrl: "https://codeforces.com",
-        rating: "1942",
-        maxRating: "1980",
-        rank: "Candidate Master",
-        solvedCount: "1,240+",
-        badge: "Purple Master",
+        platform: "LeetCode",
+        handle: "pranjalgupta0280",
+        profileUrl: "https://leetcode.com/pranjalgupta0280",
+        rating: "1871",
+        maxRating: "1871",
+        rank: "Knight",
+        solvedCount: "500+",
+        badge: "Knight Badge",
         order: 1
       },
       {
-        platform: "LeetCode",
-        handle: "alexdev_cs",
-        profileUrl: "https://leetcode.com",
-        rating: "2150",
-        maxRating: "2180",
-        rank: "Knight (Top 1.5%)",
-        solvedCount: "850+",
-        badge: "2x Guardian Badge",
+        platform: "Codeforces",
+        handle: "pranjalgupta0280",
+        profileUrl: "https://codeforces.com/profile/pranjalgupta0280",
+        rating: "1324",
+        maxRating: "1324",
+        rank: "Pupil",
+        solvedCount: "400+",
+        badge: "Pupil",
         order: 2
       },
       {
         platform: "CodeChef",
-        handle: "alex_chef",
-        profileUrl: "https://codechef.com",
-        rating: "2054",
-        maxRating: "2100",
-        rank: "5 Star Coder",
-        solvedCount: "420+",
-        badge: "Global Rank Top 100",
+        handle: "pranjalgupta0280",
+        profileUrl: "https://codechef.com/users/pranjalgupta0280",
+        rating: "1650+",
+        maxRating: "1650+",
+        rank: "3-Star Coder",
+        solvedCount: "300+",
+        badge: "3-Star Badge",
         order: 3
       },
       {
         platform: "GitHub",
-        handle: "alexdev-official",
-        profileUrl: "https://github.com",
-        rating: "500+ Contributions",
-        maxRating: "1,200 Stars",
-        rank: "Pro Developer",
-        solvedCount: "64 Repositories",
-        badge: "Arctic Code Vault Contributor",
+        handle: "pranjalgupta0280",
+        profileUrl: "https://github.com/pranjalgupta0280",
+        rating: "Active Contributor",
+        maxRating: "20+ Repos",
+        rank: "Full Stack & AI Dev",
+        solvedCount: "Repositories & Open Source",
+        badge: "Git Master",
         order: 4
       }
     ];

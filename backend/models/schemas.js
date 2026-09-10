@@ -20,7 +20,7 @@ const profileSchema = new mongoose.Schema({
 // Skill Schema
 const skillSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  category: { type: String, enum: ['Frontend', 'Backend', 'Database', 'DevOps & Cloud', 'Languages & CS', 'Tools & Others'], required: true },
+  category: { type: String, enum: ['Frontend', 'Backend', 'Database', 'DevOps & Cloud', 'DevOps & Tools', 'Languages & CS', 'Tools & Others', 'AI & Agentic Systems'], required: true },
   proficiency: { type: Number, min: 1, max: 100, default: 85 },
   icon: { type: String, default: 'Code' },
   order: { type: Number, default: 0 }
