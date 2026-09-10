@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, ShieldCheck, KeyRound, AlertCircle, ArrowLeft, Terminal } from 'lucide-react';
+import { Lock, KeyRound, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function AdminLogin({ onClose }) {
@@ -31,22 +31,19 @@ export default function AdminLogin({ onClose }) {
   return (
     <div style={{
       position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+      top: 0, left: 0, right: 0, bottom: 0,
       zIndex: 2000,
-      background: 'rgba(9, 13, 22, 0.85)',
-      backdropFilter: 'blur(16px)',
+      background: 'rgba(0, 0, 0, 0.35)',
+      backdropFilter: 'blur(6px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '24px'
     }}>
-      <div className="glass-panel" style={{
-        maxWidth: '440px',
+      <div className="editorial-card" style={{
+        maxWidth: '400px',
         width: '100%',
-        padding: '36px',
+        padding: '32px',
         position: 'relative'
       }}>
         <button
@@ -59,38 +56,37 @@ export default function AdminLogin({ onClose }) {
             display: 'flex',
             alignItems: 'center',
             gap: '4px',
-            fontSize: '0.85rem'
+            fontSize: '0.8rem'
           }}
         >
-          <ArrowLeft size={16} />
-          <span>Back to Site</span>
+          <ArrowLeft size={14} />
+          <span>Back</span>
         </button>
 
-        <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '28px' }}>
+        <div style={{ textAlign: 'center', marginTop: '16px', marginBottom: '24px' }}>
           <div style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '16px',
-            background: 'var(--gradient-brand)',
-            color: '#fff',
+            width: '42px',
+            height: '42px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'var(--bg-muted)',
+            color: 'var(--text-primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 16px auto',
-            boxShadow: 'var(--shadow-glow)'
+            margin: '0 auto 12px auto'
           }}>
-            <Lock size={28} />
+            <Lock size={20} />
           </div>
 
-          <h2 style={{ fontSize: '1.6rem', marginBottom: '6px' }}>Admin Authentication</h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-            Enter your credentials to access the CMS Control Panel.
+          <h2 style={{ fontSize: '1.35rem', fontWeight: '600', marginBottom: '4px' }}>Admin Authentication</h2>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            Enter credentials to manage portfolio data.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '6px' }}>Username</label>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Username</label>
             <input
               type="text"
               value={username}
@@ -99,18 +95,19 @@ export default function AdminLogin({ onClose }) {
               placeholder="e.g. admin"
               style={{
                 width: '100%',
-                padding: '12px 16px',
-                borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid var(--border-subtle)',
-                color: '#fff',
-                outline: 'none'
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-sm)',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-hairline)',
+                color: 'var(--text-primary)',
+                outline: 'none',
+                fontSize: '0.9rem'
               }}
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '6px' }}>Password</label>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Password</label>
             <input
               type="password"
               value={password}
@@ -119,27 +116,19 @@ export default function AdminLogin({ onClose }) {
               placeholder="••••••••"
               style={{
                 width: '100%',
-                padding: '12px 16px',
-                borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid var(--border-subtle)',
-                color: '#fff',
-                outline: 'none'
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-sm)',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-hairline)',
+                color: 'var(--text-primary)',
+                outline: 'none',
+                fontSize: '0.9rem'
               }}
             />
           </div>
 
           {error && (
-            <div style={{
-              padding: '10px 14px',
-              borderRadius: 'var(--radius-md)',
-              background: 'rgba(239, 68, 68, 0.15)',
-              color: '#f87171',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.85rem'
-            }}>
+            <div style={{ color: '#991b1b', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <AlertCircle size={16} />
               <span>{error}</span>
             </div>
@@ -149,28 +138,28 @@ export default function AdminLogin({ onClose }) {
             type="submit"
             disabled={loading}
             className="btn-primary"
-            style={{ justifyContent: 'center', width: '100%' }}
+            style={{ justifyContent: 'center', width: '100%', marginTop: '4px' }}
           >
-            <KeyRound size={16} />
-            <span>{loading ? 'Authenticating...' : 'Sign In to Dashboard'}</span>
+            <KeyRound size={14} />
+            <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
           </button>
 
           <button
             type="button"
             onClick={handleDemoFill}
             style={{
-              padding: '8px',
-              fontSize: '0.8rem',
-              color: 'var(--accent-indigo)',
+              padding: '4px',
+              fontSize: '0.775rem',
+              color: 'var(--text-secondary)',
               textAlign: 'center',
-              textDecoration: 'underline',
-              cursor: 'pointer'
+              textDecoration: 'underline'
             }}
           >
-            Auto-fill Default Admin Credentials (admin / admin123)
+            Auto-fill credentials (admin / admin123)
           </button>
         </form>
       </div>
     </div>
   );
 }
+

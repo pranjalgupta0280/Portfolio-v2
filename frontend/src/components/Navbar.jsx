@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { ShieldCheck, Terminal } from 'lucide-react';
+import { ShieldCheck, Square } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
@@ -10,17 +10,17 @@ export default function Navbar({ onOpenAdmin }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
+    { name: 'Overview', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Skills', path: '/skills' },
-    { name: 'DSA Profiles', path: '/dsa' },
+    { name: 'DSA', path: '/dsa' },
     { name: 'Projects', path: '/projects' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -32,87 +32,63 @@ export default function Navbar({ onOpenAdmin }) {
       left: 0,
       right: 0,
       zIndex: 1000,
-      backdropFilter: scrolled ? 'blur(20px)' : 'none',
-      backgroundColor: scrolled ? 'rgba(7, 9, 14, 0.88)' : 'transparent',
-      borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
-      transition: 'all 0.3s ease',
-      padding: scrolled ? '14px 0' : '22px 0'
+      backgroundColor: scrolled ? 'rgba(248, 249, 250, 0.92)' : 'rgba(248, 249, 250, 0.6)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid var(--border-hairline)',
+      transition: 'all 0.2s ease',
+      padding: '16px 0'
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Brand Logo */}
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.25rem', fontWeight: '800' }}>
-            <div style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '10px',
-              background: 'var(--accent-cyan)',
-              color: '#000',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: '800',
-              boxShadow: 'var(--shadow-glow-cyan)'
-            }}>
-              <Terminal size={18} />
-            </div>
-            <span style={{ color: '#fff', fontFamily: 'var(--font-heading)' }}>
-              System<span style={{ color: 'var(--accent-cyan)' }}>.01</span>
-            </span>
-          </Link>
-        </motion.div>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+          <Square size={16} fill="var(--text-primary)" style={{ color: 'var(--text-primary)' }} />
+          <span>PORTFOLIO</span>
+        </Link>
 
         {/* Navigation Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
               to={link.path}
               style={({ isActive }) => ({
-                color: isActive ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                fontSize: '0.9rem',
-                fontWeight: isActive ? '700' : '500',
+                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                fontSize: '0.875rem',
+                fontWeight: isActive ? '600' : '400',
                 transition: 'var(--transition-fast)',
-                borderBottom: isActive ? '2px solid var(--accent-cyan)' : '2px solid transparent',
-                paddingBottom: '4px'
+                borderBottom: isActive ? '1px solid var(--text-primary)' : '1px solid transparent',
+                paddingBottom: '2px'
               })}
             >
-              {({ isActive }) => (
-                <motion.span 
-                  whileHover={{ y: -2, color: '#ffffff' }}
-                  style={{ display: 'inline-block' }}
-                >
-                  {link.name}
-                </motion.span>
-              )}
+              {link.name}
             </NavLink>
           ))}
 
-          {/* Admin Lock Button */}
+          {/* Admin Portal Button */}
           <motion.button
-            whileHover={{ scale: 1.06, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onOpenAdmin}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-full)',
-              border: isAuthenticated ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(0, 245, 212, 0.3)',
-              background: isAuthenticated ? 'rgba(16, 185, 129, 0.12)' : 'rgba(0, 245, 212, 0.08)',
-              color: isAuthenticated ? '#34d399' : 'var(--accent-cyan)',
-              fontSize: '0.825rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              boxShadow: isAuthenticated ? '0 0 15px rgba(16, 185, 129, 0.2)' : 'var(--shadow-glow-cyan)'
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-hairline)',
+              background: isAuthenticated ? '#f0fdf4' : 'var(--bg-surface)',
+              color: isAuthenticated ? '#166534' : 'var(--text-primary)',
+              fontSize: '0.8rem',
+              fontWeight: '500',
+              cursor: 'pointer'
             }}
           >
-            <ShieldCheck size={16} />
-            <span>{isAuthenticated ? 'Admin Active' : 'Admin Portal'}</span>
+            <ShieldCheck size={14} />
+            <span>{isAuthenticated ? 'Admin Active' : 'Admin'}</span>
           </motion.button>
         </nav>
       </div>
     </header>
   );
 }
+

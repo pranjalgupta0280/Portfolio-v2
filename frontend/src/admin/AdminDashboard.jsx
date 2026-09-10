@@ -3,6 +3,7 @@ import {
   User, Code2, Trophy, FolderPlus, MessageSquare, LogOut, Check, Trash2, Edit3, Plus,
   Sparkles, Save, ShieldCheck, ArrowLeft, RefreshCw, Layers, GraduationCap, Award
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { usePortfolio } from '../context/PortfolioContext';
@@ -251,28 +252,29 @@ export default function AdminDashboard({ onClose }) {
       position: 'fixed',
       top: 0, left: 0, right: 0, bottom: 0,
       zIndex: 2500,
-      background: '#090d16',
-      color: '#fff',
+      background: 'var(--bg-primary)',
+      color: 'var(--text-primary)',
       display: 'flex',
       flexDirection: 'column',
       overflow: 'hidden'
     }}>
       {/* CMS Header Bar */}
-      <div className="glass-nav" style={{
+      <div style={{
         padding: '16px 28px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottom: '1px solid var(--border-subtle)'
+        borderBottom: '1px solid var(--border-hairline)',
+        background: 'var(--bg-surface)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}>
-            <ArrowLeft size={18} />
+          <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+            <ArrowLeft size={16} />
             <span>Return to Portfolio</span>
           </button>
-          <div style={{ height: '20px', width: '1px', background: 'var(--border-subtle)' }} />
-          <h2 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <ShieldCheck size={20} style={{ color: '#34d399' }} />
+          <div style={{ height: '16px', width: '1px', background: 'var(--border-hairline)' }} />
+          <h2 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600' }}>
+            <ShieldCheck size={18} style={{ color: '#166534' }} />
             <span>Admin CMS Panel</span>
           </h2>
         </div>
@@ -280,15 +282,16 @@ export default function AdminDashboard({ onClose }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           {saveStatus && (
             <div style={{
-              padding: '6px 14px',
-              borderRadius: 'var(--radius-full)',
-              background: 'rgba(16, 185, 129, 0.2)',
-              color: '#34d399',
-              fontSize: '0.85rem',
-              fontWeight: '600',
+              padding: '4px 12px',
+              borderRadius: 'var(--radius-sm)',
+              background: '#f0fdf4',
+              color: '#166534',
+              fontSize: '0.8rem',
+              fontWeight: '500',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '6px',
+              border: '1px solid #bbf7d0'
             }}>
               <Check size={14} />
               <span>{saveStatus}</span>
@@ -297,19 +300,14 @@ export default function AdminDashboard({ onClose }) {
 
           <button
             onClick={() => { logout(); onClose(); }}
+            className="btn-outline"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-md)',
-              background: 'rgba(239, 68, 68, 0.15)',
-              color: '#f87171',
-              fontWeight: '600',
-              fontSize: '0.85rem'
+              padding: '6px 14px',
+              fontSize: '0.8rem',
+              color: '#991b1b'
             }}
           >
-            <LogOut size={16} />
+            <LogOut size={14} />
             <span>Logout</span>
           </button>
         </div>
@@ -319,13 +317,13 @@ export default function AdminDashboard({ onClose }) {
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         {/* Sidebar Nav */}
         <div style={{
-          width: '240px',
-          background: 'rgba(15, 23, 42, 0.6)',
-          borderRight: '1px solid var(--border-subtle)',
-          padding: '24px 16px',
+          width: '220px',
+          background: 'var(--bg-surface)',
+          borderRight: '1px solid var(--border-hairline)',
+          padding: '20px 12px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '8px'
+          gap: '6px'
         }}>
           {[
             { id: 'profile', label: 'Personal Details', icon: User },
@@ -333,10 +331,10 @@ export default function AdminDashboard({ onClose }) {
             { id: 'skills', label: 'Skills & Stack', icon: Code2 },
             { id: 'dsa', label: 'DSA Profiles', icon: Trophy },
             { id: 'education', label: 'Education & Awards', icon: GraduationCap },
-            { id: 'messages', label: 'Contact Messages', icon: MessageSquare }
+            { id: 'messages', label: 'Messages', icon: MessageSquare }
           ].map((item) => {
-
             const Icon = item.icon;
+            const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
@@ -345,17 +343,17 @@ export default function AdminDashboard({ onClose }) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '10px',
-                  padding: '12px 16px',
-                  borderRadius: 'var(--radius-md)',
-                  background: activeTab === item.id ? 'var(--gradient-brand)' : 'transparent',
-                  color: activeTab === item.id ? '#fff' : 'var(--text-secondary)',
-                  fontWeight: '600',
-                  fontSize: '0.9rem',
+                  padding: '10px 12px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: isActive ? 'var(--primary-ink)' : 'transparent',
+                  color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                  fontWeight: isActive ? '600' : '400',
+                  fontSize: '0.875rem',
                   textAlign: 'left',
                   transition: 'var(--transition-fast)'
                 }}
               >
-                <Icon size={18} />
+                <Icon size={16} />
                 <span>{item.label}</span>
               </button>
             );
@@ -363,10 +361,17 @@ export default function AdminDashboard({ onClose }) {
         </div>
 
         {/* CMS Tab Body */}
-        <div style={{ flex: 1, padding: '36px', overflowY: 'auto' }}>
-          {/* TAB 1: PROFILE & BIO */}
-          {activeTab === 'profile' && (
-            <div style={{ maxWidth: '800px' }}>
+        <div style={{ flex: 1, padding: '36px', overflowY: 'auto', position: 'relative' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: 15 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -15 }}
+              transition={{ duration: 0.2 }}
+            >
+              {activeTab === 'profile' && (
+                <div style={{ maxWidth: '800px' }}>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Edit Personal Details</h3>
               <form onSubmit={handleSaveProfile} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
@@ -1056,6 +1061,8 @@ export default function AdminDashboard({ onClose }) {
               )}
             </div>
           )}
+        </motion.div>
+      </AnimatePresence>
         </div>
       </div>
     </div>

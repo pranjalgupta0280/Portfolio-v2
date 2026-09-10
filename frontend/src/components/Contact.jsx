@@ -24,7 +24,7 @@ export default function Contact() {
     setStatus({ loading: true, success: null, error: null });
     try {
       await sendContactMessage(formData);
-      setStatus({ loading: false, success: 'Thank you! Your message has been sent successfully.', error: null });
+      setStatus({ loading: false, success: 'Thank you! Your message has been sent.', error: null });
       setFormData({ senderName: '', senderEmail: '', subject: '', message: '' });
     } catch (err) {
       setStatus({ loading: false, success: null, error: err.response?.data?.message || 'Failed to send message.' });
@@ -32,299 +32,190 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding" style={{ position: 'relative' }}>
+    <section id="contact" className="section-padding">
       <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="section-header"
-        >
-          <span className="tech-tag" style={{ color: 'var(--accent-cyan)' }}>Get in Touch</span>
-          <h2 className="section-title">Let's Work Together</h2>
+        <div className="section-header">
+          <span className="kicker-tag">COMMUNICATION</span>
+          <h2 className="section-title">Get in Touch</h2>
           <p className="section-subtitle">
-            Have a project in mind, a job opportunity, or just want to connect? Send a message below.
+            Initiate conversations for technical projects, advisory, or engineering roles.
           </p>
-        </motion.div>
+        </div>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '40px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '32px'
         }}>
-          {/* Contact Details Card */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ y: -5 }}
-            className="glass-panel" 
-            style={{ padding: '36px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '24px' }}
-          >
+          {/* Details Card */}
+          <div className="editorial-card" style={{ padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ fontSize: '1.4rem', marginBottom: '12px', color: '#ffffff' }}>Contact Information</h3>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', lineHeight: '1.6' }}>
-                Feel free to reach out via the contact form or directly through email and social platforms.
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '16px' }}>Direct Coordinates</h3>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                 {profile.email && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{
-                      width: '44px',
-                      height: '44px',
-                      borderRadius: '12px',
-                      background: 'rgba(0, 245, 212, 0.12)',
-                      color: 'var(--accent-cyan)',
-                      border: '1px solid rgba(0, 245, 212, 0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <Mail size={20} />
-                    </div>
-                    <div>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>EMAIL</span>
-                      <p style={{ fontWeight: '600', color: '#ffffff' }}>{profile.email}</p>
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Mail size={16} />
+                    <span>{profile.email}</span>
                   </div>
                 )}
-
                 {profile.phone && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{
-                      width: '44px',
-                      height: '44px',
-                      borderRadius: '12px',
-                      background: 'rgba(168, 85, 247, 0.12)',
-                      color: 'var(--accent-purple)',
-                      border: '1px solid rgba(168, 85, 247, 0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <Phone size={20} />
-                    </div>
-                    <div>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>PHONE</span>
-                      <p style={{ fontWeight: '600', color: '#ffffff' }}>{profile.phone}</p>
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Phone size={16} />
+                    <span>{profile.phone}</span>
                   </div>
                 )}
-
                 {profile.location && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{
-                      width: '44px',
-                      height: '44px',
-                      borderRadius: '12px',
-                      background: 'rgba(0, 245, 212, 0.12)',
-                      color: 'var(--accent-cyan)',
-                      border: '1px solid rgba(0, 245, 212, 0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <MapPin size={20} />
-                    </div>
-                    <div>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>LOCATION</span>
-                      <p style={{ fontWeight: '600', color: '#ffffff' }}>{profile.location}</p>
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <MapPin size={16} />
+                    <span>{profile.location}</span>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Social Links */}
-            <div style={{ marginTop: '36px', paddingTop: '24px', borderTop: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-code)', color: 'var(--text-muted)', letterSpacing: '0.1em', display: 'block', marginBottom: '12px' }}>
-                SOCIAL NETWORKS
-              </span>
+            <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--border-hairline)' }}>
+              <span className="kicker-tag" style={{ marginBottom: '8px', display: 'block' }}>Social Links</span>
               <div style={{ display: 'flex', gap: '12px' }}>
                 {profile.githubUrl && (
-                  <motion.a whileHover={{ scale: 1.15, color: 'var(--accent-cyan)' }} href={profile.githubUrl} target="_blank" rel="noreferrer" className="btn-dark-pill" style={{ padding: '10px 14px' }}>
-                    <Github size={18} />
-                  </motion.a>
+                  <a href={profile.githubUrl} target="_blank" rel="noreferrer" className="btn-outline" style={{ padding: '8px' }}>
+                    <Github size={16} />
+                  </a>
                 )}
                 {profile.linkedinUrl && (
-                  <motion.a whileHover={{ scale: 1.15, color: 'var(--accent-cyan)' }} href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="btn-dark-pill" style={{ padding: '10px 14px' }}>
-                    <Linkedin size={18} />
-                  </motion.a>
+                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer" className="btn-outline" style={{ padding: '8px' }}>
+                    <Linkedin size={16} />
+                  </a>
                 )}
                 {profile.twitterUrl && (
-                  <motion.a whileHover={{ scale: 1.15, color: 'var(--accent-cyan)' }} href={profile.twitterUrl} target="_blank" rel="noreferrer" className="btn-dark-pill" style={{ padding: '10px 14px' }}>
-                    <Twitter size={18} />
-                  </motion.a>
+                  <a href={profile.twitterUrl} target="_blank" rel="noreferrer" className="btn-outline" style={{ padding: '8px' }}>
+                    <Twitter size={16} />
+                  </a>
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Interactive Form Card */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="glass-panel" 
-            style={{ padding: '36px', borderRadius: '24px' }}
-          >
-            <h3 style={{ fontSize: '1.4rem', marginBottom: '20px', color: '#ffffff' }}>Send a Message</h3>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Form Card */}
+          <div className="editorial-card" style={{ padding: '28px' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '16px' }}>Send Message</h3>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '6px' }}>Your Name *</label>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Name</label>
                 <input
                   type="text"
                   name="senderName"
                   value={formData.senderName}
                   onChange={handleChange}
                   required
-                  placeholder="Sarah Jenkins"
+                  placeholder="Your full name"
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    padding: '10px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-hairline)',
+                    color: 'var(--text-primary)',
                     outline: 'none',
-                    transition: 'border 0.3s ease'
+                    fontSize: '0.9rem'
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-cyan)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '6px' }}>Email Address *</label>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Email</label>
                 <input
                   type="email"
                   name="senderEmail"
                   value={formData.senderEmail}
                   onChange={handleChange}
                   required
-                  placeholder="sarah@example.com"
+                  placeholder="name@example.com"
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    padding: '10px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-hairline)',
+                    color: 'var(--text-primary)',
                     outline: 'none',
-                    transition: 'border 0.3s ease'
+                    fontSize: '0.9rem'
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-cyan)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '6px' }}>Subject</label>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Subject</label>
                 <input
                   type="text"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder="Project Inquiry / Job Opportunity"
+                  placeholder="Inquiry topic"
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    padding: '10px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-hairline)',
+                    color: 'var(--text-primary)',
                     outline: 'none',
-                    transition: 'border 0.3s ease'
+                    fontSize: '0.9rem'
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-cyan)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '6px' }}>Message *</label>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '500', marginBottom: '4px' }}>Message</label>
                 <textarea
                   name="message"
-                  rows="5"
+                  rows="4"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  placeholder="Describe your project, timeline, or inquiry..."
+                  placeholder="Briefly describe your inquiry..."
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    padding: '10px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-hairline)',
+                    color: 'var(--text-primary)',
                     outline: 'none',
-                    resize: 'vertical',
-                    transition: 'border 0.3s ease'
+                    fontSize: '0.9rem',
+                    resize: 'vertical'
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-cyan)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
               {status.success && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    color: '#34d399',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  <CheckCircle2 size={18} />
+                <div style={{ color: '#166534', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <CheckCircle2 size={16} />
                   <span>{status.success}</span>
-                </motion.div>
+                </div>
               )}
 
               {status.error && (
-                <motion.div 
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{
-                    padding: '12px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(239, 68, 68, 0.15)',
-                    color: '#f87171',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  <AlertCircle size={18} />
+                <div style={{ color: '#991b1b', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <AlertCircle size={16} />
                   <span>{status.error}</span>
-                </motion.div>
+                </div>
               )}
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={status.loading}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn-cyan"
-                style={{ justifyContent: 'center', marginTop: '10px', color: '#000000' }}
+                className="btn-primary"
+                style={{ justifyContent: 'center', width: '100%', marginTop: '8px' }}
               >
-                <Send size={16} style={{ color: '#000000' }} />
-                <span style={{ color: '#000000', fontWeight: '700' }}>{status.loading ? 'Sending Message...' : 'Send Message'}</span>
-              </motion.button>
+                <Send size={14} />
+                <span>{status.loading ? 'Sending...' : 'Send Message'}</span>
+              </button>
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+

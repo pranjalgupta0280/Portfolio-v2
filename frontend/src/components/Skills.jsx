@@ -28,133 +28,108 @@ export default function Skills() {
     : skills.filter(s => s.category === selectedCategory);
 
   return (
-    <section id="skills" className="section-padding" style={{ position: 'relative' }}>
+    <section id="skills" className="section-padding">
       <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="section-header"
-        >
-          <span className="tech-tag" style={{ color: 'var(--accent-cyan)' }}>Technical Competency</span>
-          <h2 className="section-title">Skills & Capabilities</h2>
+        <div className="section-header">
+          <span className="kicker-tag">CAPABILITIES</span>
+          <h2 className="section-title">Skills & Technologies</h2>
           <p className="section-subtitle">
-            Technologies, frameworks, and programming paradigms I utilize to craft modern software.
+            Core toolsets, technical stack, and software methodologies.
           </p>
-        </motion.div>
+        </div>
 
         {/* Category Filters */}
         <div style={{
           display: 'flex',
-          justifyContent: 'center',
+          gap: '8px',
           flexWrap: 'wrap',
-          gap: '10px',
-          marginBottom: '40px'
+          marginBottom: '32px'
         }}>
           {categories.map((cat) => (
-            <motion.button
+            <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
               style={{
-                padding: '8px 20px',
-                borderRadius: 'var(--radius-full)',
-                background: selectedCategory === cat ? 'var(--accent-cyan)' : 'rgba(255, 255, 255, 0.05)',
-                color: selectedCategory === cat ? '#000000' : 'var(--text-secondary)',
-                fontWeight: '700',
-                fontSize: '0.875rem',
-                border: selectedCategory === cat ? '1px solid #fff' : '1px solid var(--border-subtle)',
-                boxShadow: selectedCategory === cat ? 'var(--shadow-glow-cyan)' : 'none',
-                transition: 'all 0.3s ease'
+                padding: '6px 14px',
+                borderRadius: 'var(--radius-sm)',
+                background: selectedCategory === cat ? 'var(--primary-ink)' : 'transparent',
+                color: selectedCategory === cat ? '#ffffff' : 'var(--text-secondary)',
+                fontWeight: '500',
+                fontSize: '0.8rem',
+                border: '1px solid var(--border-hairline)',
+                transition: 'var(--transition-fast)'
               }}
             >
               {cat}
-            </motion.button>
+            </button>
           ))}
         </div>
 
-        {/* Skills Grid */}
-        <motion.div 
-          layout
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '24px'
-          }}
-        >
+        {/* Skills Stack */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gap: '16px'
+        }}>
           <AnimatePresence>
             {filteredSkills.map((skill, index) => {
               const IconComponent = iconMap[skill.icon] || Code;
               return (
                 <motion.div 
-                  layout
                   key={skill._id || index}
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  whileHover={{ y: -6, boxShadow: '0 15px 30px rgba(0, 245, 212, 0.18)' }}
-                  className="glass-panel" 
-                  style={{
-                    padding: '24px',
-                    position: 'relative'
-                  }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2, delay: index * 0.03 }}
+                  className="editorial-card" 
+                  style={{ padding: '20px' }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                     <div style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '12px',
-                      background: 'rgba(0, 245, 212, 0.12)',
-                      color: 'var(--accent-cyan)',
-                      border: '1px solid rgba(0, 245, 212, 0.2)',
+                      width: '34px',
+                      height: '34px',
+                      borderRadius: 'var(--radius-sm)',
+                      background: 'var(--bg-muted)',
+                      color: 'var(--text-primary)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>
-                      <IconComponent size={22} />
+                      <IconComponent size={18} />
                     </div>
                     <div>
-                      <h4 style={{ fontSize: '1.05rem', color: '#ffffff' }}>{skill.name}</h4>
-                      <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontFamily: 'var(--font-code)' }}>{skill.category}</span>
+                      <h4 style={{ fontSize: '0.95rem', fontWeight: '600' }}>{skill.name}</h4>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>{skill.category}</span>
                     </div>
                   </div>
 
-                  {/* Animated Proficiency Bar */}
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>
                       <span>Proficiency</span>
-                      <span style={{ fontWeight: '600', color: 'var(--accent-cyan)', fontFamily: 'var(--font-code)' }}>{skill.proficiency}%</span>
+                      <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{skill.proficiency}%</span>
                     </div>
                     <div style={{
                       width: '100%',
-                      height: '6px',
-                      borderRadius: '3px',
-                      background: 'rgba(255, 255, 255, 0.08)',
+                      height: '4px',
+                      borderRadius: '2px',
+                      background: 'var(--bg-muted)',
                       overflow: 'hidden'
                     }}>
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.proficiency}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
-                        style={{
-                          height: '100%',
-                          background: 'linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-purple) 100%)',
-                          borderRadius: '3px',
-                          boxShadow: '0 0 10px rgba(0, 245, 212, 0.5)'
-                        }} 
-                      />
+                      <div style={{
+                        width: `${skill.proficiency}%`,
+                        height: '100%',
+                        background: 'var(--primary-ink)',
+                        borderRadius: '2px'
+                      }} />
                     </div>
                   </div>
                 </motion.div>
               );
             })}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
+

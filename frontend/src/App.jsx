@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import FuturisticBackground from './components/ui/hero-futuristic';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -19,6 +19,7 @@ import { usePortfolio } from './context/PortfolioContext';
 export default function App() {
   const { isAuthenticated } = useAuth();
   const { loading } = usePortfolio();
+  const location = useLocation();
 
   const [adminModalOpen, setAdminModalOpen] = useState(false);
 
@@ -34,49 +35,57 @@ export default function App() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#07090e',
+        background: 'var(--bg-primary)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '12px',
         color: 'var(--text-secondary)'
       }}>
         <div style={{
-          width: '48px',
-          height: '48px',
+          width: '32px',
+          height: '32px',
           borderRadius: '50%',
-          border: '3px solid rgba(0, 245, 212, 0.2)',
-          borderTopColor: 'var(--accent-cyan)',
-          animation: 'spin 1s linear infinite'
+          border: '2px solid var(--border-hairline)',
+          borderTopColor: 'var(--text-primary)',
+          animation: 'spin 0.8s linear infinite'
         }} />
         <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
-        <p style={{ fontSize: '0.9rem', fontFamily: 'var(--font-code)', color: 'var(--accent-cyan)' }}>INITIALIZING SPATIAL SYSTEM...</p>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Loading portfolio system...</p>
       </div>
     );
   }
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', background: '#07090e' }}>
-      {/* 3D Futuristic WebGL Depth & Laser Scan Background */}
-      <FuturisticBackground />
-
-      {/* Public Glass Navbar */}
+    <div style={{ position: 'relative', minHeight: '100vh', background: 'var(--bg-primary)' }}>
+      {/* Public Navbar */}
       <Navbar onOpenAdmin={handleOpenAdmin} />
 
-      {/* Page Routes */}
+      {/* Slide-wise Page Routes */}
       <main style={{ position: 'relative', zIndex: 1 }}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/skills" element={<SkillsPage />} />
-          <Route path="/dsa" element={<DsaPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            style={{ width: '100%' }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/skills" element={<SkillsPage />} />
+              <Route path="/dsa" element={<DsaPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
       </main>
 
-      {/* Footer */}
+      {/* Minimalist Footer */}
       <Footer />
 
       {/* Admin Auth / Dashboard Gate Modal */}
@@ -90,3 +99,4 @@ export default function App() {
     </div>
   );
 }
+

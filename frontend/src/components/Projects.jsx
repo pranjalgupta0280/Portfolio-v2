@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Sparkles, Layers, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolio } from '../context/PortfolioContext';
 
@@ -31,184 +31,126 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="section-padding" style={{ position: 'relative' }}>
+    <section id="projects" className="section-padding">
       <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="section-header"
-        >
-          <span className="tech-tag" style={{ color: 'var(--accent-cyan)' }}>Featured Portfolio Work</span>
-          <h2 className="section-title">Crafted Software & Apps</h2>
+        <div className="section-header">
+          <span className="kicker-tag">SELECTED WORK</span>
+          <h2 className="section-title">Projects & Systems</h2>
           <p className="section-subtitle">
-            A selection of production-ready SaaS apps, open-source projects, and full-stack systems.
+            Editorial showcase of engineering work, web apps, and digital products.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Category Selector */}
+        {/* Category Filters */}
         {categories.length > 1 && (
           <div style={{
             display: 'flex',
-            justifyContent: 'center',
+            gap: '8px',
             flexWrap: 'wrap',
-            gap: '10px',
-            marginBottom: '40px'
+            marginBottom: '32px'
           }}>
             {categories.map((cat) => (
-              <motion.button
+              <button
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.95 }}
                 style={{
-                  padding: '8px 20px',
-                  borderRadius: 'var(--radius-full)',
-                  background: selectedCategory === cat ? 'var(--accent-cyan)' : 'rgba(255, 255, 255, 0.05)',
-                  color: selectedCategory === cat ? '#000000' : 'var(--text-secondary)',
-                  fontWeight: '700',
-                  fontSize: '0.875rem',
-                  border: selectedCategory === cat ? '1px solid #fff' : '1px solid var(--border-subtle)',
-                  boxShadow: selectedCategory === cat ? 'var(--shadow-glow-cyan)' : 'none',
-                  transition: 'all 0.3s ease'
+                  padding: '6px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: selectedCategory === cat ? 'var(--primary-ink)' : 'transparent',
+                  color: selectedCategory === cat ? '#ffffff' : 'var(--text-secondary)',
+                  fontWeight: '500',
+                  fontSize: '0.8rem',
+                  border: '1px solid var(--border-hairline)',
+                  transition: 'var(--transition-fast)'
                 }}
               >
                 {cat}
-              </motion.button>
+              </button>
             ))}
           </div>
         )}
 
-        {/* Projects Grid */}
-        <motion.div 
-          layout
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '32px'
-          }}
-        >
+        {/* Minimalist Editorial Projects Stack */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <AnimatePresence mode="wait">
             {paginatedProjects.map((proj, idx) => (
               <motion.div 
-                layout
                 key={proj._id || idx}
-                initial={{ opacity: 0, y: 25, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
-                whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0, 245, 212, 0.2)' }}
-                className="glass-panel" 
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 15 }}
+                transition={{ duration: 0.25, delay: idx * 0.05 }}
+                className="editorial-card"
                 style={{
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: '24px'
+                  padding: '24px',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 220px',
+                  gap: '24px',
+                  alignItems: 'center'
                 }}
               >
-                {/* Project Cover Image */}
-                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                  <motion.img
-                    src={proj.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80'}
-                    alt={proj.title}
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                  />
-                  {proj.featured && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '16px',
-                      left: '16px',
-                      background: 'rgba(0, 245, 212, 0.9)',
-                      color: '#000',
-                      padding: '4px 12px',
-                      borderRadius: 'var(--radius-full)',
-                      fontSize: '0.7rem',
-                      fontFamily: 'var(--font-code)',
-                      fontWeight: '700',
-                      letterSpacing: '0.08em'
-                    }}>
-                      ★ FEATURED BUILD
-                    </span>
-                  )}
+                {/* Left Text & Details */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '6px' }}>
+                    <span className="kicker-tag" style={{ fontSize: '0.7rem' }}>{proj.category || 'PROJECT'}</span>
+                    {proj.featured && (
+                      <span className="pill-tag" style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.65rem' }}>
+                        FEATURED
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: '600', marginBottom: '8px', letterSpacing: '-0.02em' }}>
+                    {proj.title}
+                  </h3>
+
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.925rem', marginBottom: '16px', lineHeight: '1.6' }}>
+                    {proj.description}
+                  </p>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
+                    {proj.techStack?.map((t) => (
+                      <span key={t} className="pill-tag">{t}</span>
+                    ))}
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <button
+                      onClick={() => setActiveModalProject(proj)}
+                      className="btn-outline"
+                      style={{ padding: '6px 12px', fontSize: '0.8rem' }}
+                    >
+                      <Eye size={14} />
+                      <span>Details</span>
+                    </button>
+
+                    {proj.liveDemoUrl && (
+                      <a href={proj.liveDemoUrl} target="_blank" rel="noreferrer" className="btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+                        <ExternalLink size={14} />
+                        <span>Demo</span>
+                      </a>
+                    )}
+                    {proj.githubUrl && (
+                      <a href={proj.githubUrl} target="_blank" rel="noreferrer" className="btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+                        <Github size={14} />
+                        <span>Source</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
 
-                {/* Project Details */}
-                <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between' }}>
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <h3 style={{ fontSize: '1.4rem', color: '#ffffff' }}>{proj.title}</h3>
-                      <span className="tech-tag" style={{ fontSize: '0.7rem' }}>{proj.category}</span>
-                    </div>
-
-                    <p style={{ color: 'var(--accent-purple)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>
-                      {proj.subtitle || 'Production Application'}
-                    </p>
-
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}>
-                      {proj.description}
-                    </p>
-                  </div>
-
-                  {/* Tech stack badges & action trigger */}
-                  <div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
-                      {proj.techStack?.map((t) => (
-                        <span key={t} className="cyan-pill-badge" style={{ fontSize: '0.68rem', padding: '3px 10px' }}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                      <motion.button
-                        onClick={() => setActiveModalProject(proj)}
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.96 }}
-                        className="btn-cyan"
-                        style={{ padding: '10px 20px', fontSize: '0.85rem' }}
-                      >
-                        <Eye size={15} />
-                        <span>View Details</span>
-                      </motion.button>
-
-                      {proj.liveDemoUrl && (
-                        <motion.a 
-                          href={proj.liveDemoUrl} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          whileHover={{ scale: 1.04, color: 'var(--accent-cyan)' }}
-                          className="btn-dark-pill" 
-                          style={{ padding: '10px 16px', fontSize: '0.85rem' }}
-                        >
-                          <ExternalLink size={15} />
-                        </motion.a>
-                      )}
-                      {proj.githubUrl && (
-                        <motion.a 
-                          href={proj.githubUrl} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          whileHover={{ scale: 1.04, color: 'var(--accent-cyan)' }}
-                          className="btn-dark-pill" 
-                          style={{ padding: '10px 16px', fontSize: '0.85rem' }}
-                        >
-                          <Github size={15} />
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
+                {/* Right Image Container */}
+                <div style={{ height: '140px', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-hairline)' }}>
+                  <img
+                    src={proj.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'}
+                    alt={proj.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
@@ -216,80 +158,37 @@ export default function Projects() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '12px',
-            marginTop: '48px'
+            gap: '8px',
+            marginTop: '32px'
           }}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 16px',
-                borderRadius: 'var(--radius-full)',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--border-subtle)',
-                color: currentPage === 1 ? 'var(--text-muted)' : '#fff',
-                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                opacity: currentPage === 1 ? 0.5 : 1
-              }}
+              className="btn-outline"
+              style={{ padding: '6px 12px', fontSize: '0.8rem', opacity: currentPage === 1 ? 0.4 : 1 }}
             >
-              <ChevronLeft size={16} />
+              <ChevronLeft size={14} />
               <span>Previous</span>
-            </motion.button>
+            </button>
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <motion.button
-                key={pageNum}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setCurrentPage(pageNum)}
-                style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '50%',
-                  background: currentPage === pageNum ? 'var(--accent-cyan)' : 'rgba(255, 255, 255, 0.05)',
-                  color: currentPage === pageNum ? '#000000' : '#ffffff',
-                  fontWeight: '700',
-                  fontSize: '0.9rem',
-                  border: currentPage === pageNum ? '1px solid #fff' : '1px solid var(--border-subtle)',
-                  cursor: 'pointer',
-                  boxShadow: currentPage === pageNum ? 'var(--shadow-glow-cyan)' : 'none'
-                }}
-              >
-                {pageNum}
-              </motion.button>
-            ))}
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', padding: '0 8px' }}>
+              Page {currentPage} of {totalPages}
+            </span>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 16px',
-                borderRadius: 'var(--radius-full)',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--border-subtle)',
-                color: currentPage === totalPages ? 'var(--text-muted)' : '#fff',
-                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-                opacity: currentPage === totalPages ? 0.5 : 1
-              }}
+              className="btn-outline"
+              style={{ padding: '6px 12px', fontSize: '0.8rem', opacity: currentPage === totalPages ? 0.4 : 1 }}
             >
               <span>Next</span>
-              <ChevronRight size={16} />
-            </motion.button>
+              <ChevronRight size={14} />
+            </button>
           </div>
         )}
       </div>
 
-      {/* Project Detail Pop-in Modal */}
+      {/* Modal */}
       <AnimatePresence>
         {activeModalProject && (
           <motion.div 
@@ -298,13 +197,10 @@ export default function Projects() {
             exit={{ opacity: 0 }}
             style={{
               position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              top: 0, left: 0, right: 0, bottom: 0,
               zIndex: 2000,
-              background: 'rgba(0, 0, 0, 0.85)',
-              backdropFilter: 'blur(12px)',
+              background: 'rgba(0, 0, 0, 0.4)',
+              backdropFilter: 'blur(4px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -312,67 +208,51 @@ export default function Projects() {
             }}
           >
             <motion.div 
-              initial={{ scale: 0.85, opacity: 0, y: 30 }}
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.85, opacity: 0, y: 30 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="glass-panel" 
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className="editorial-card"
               style={{
-                maxWidth: '650px',
+                maxWidth: '600px',
                 width: '100%',
                 maxHeight: '90vh',
                 overflowY: 'auto',
-                padding: '32px',
-                position: 'relative',
-                border: '1px solid rgba(0, 245, 212, 0.3)',
-                boxShadow: '0 25px 50px rgba(0, 245, 212, 0.25)'
+                padding: '28px',
+                position: 'relative'
               }}
             >
-              <motion.button
-                whileHover={{ scale: 1.2, rotate: 90 }}
+              <button
                 onClick={() => setActiveModalProject(null)}
-                style={{
-                  position: 'absolute',
-                  top: '20px',
-                  right: '20px',
-                  color: 'var(--accent-cyan)',
-                  cursor: 'pointer'
-                }}
+                style={{ position: 'absolute', top: '20px', right: '20px', color: 'var(--text-secondary)' }}
               >
-                <X size={24} />
-              </motion.button>
+                <X size={20} />
+              </button>
+
+              <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>{activeModalProject.title}</h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '16px' }}>{activeModalProject.subtitle}</p>
 
               <img
                 src={activeModalProject.imageUrl}
                 alt={activeModalProject.title}
-                style={{ width: '100%', height: '260px', objectFit: 'cover', borderRadius: '16px', marginBottom: '20px' }}
+                style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: 'var(--radius-md)', marginBottom: '16px' }}
               />
 
-              <h2 style={{ fontSize: '1.8rem', marginBottom: '6px', color: '#ffffff' }}>{activeModalProject.title}</h2>
-              <p style={{ color: 'var(--accent-purple)', fontWeight: '600', marginBottom: '16px' }}>{activeModalProject.subtitle}</p>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
-                {activeModalProject.techStack?.map((t) => (
-                  <span key={t} className="cyan-pill-badge">{t}</span>
-                ))}
-              </div>
-
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '24px' }}>
+              <p style={{ color: 'var(--text-primary)', lineHeight: '1.65', fontSize: '0.95rem', marginBottom: '20px' }}>
                 {activeModalProject.fullDescription || activeModalProject.description}
               </p>
 
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 {activeModalProject.liveDemoUrl && (
-                  <motion.a whileHover={{ scale: 1.05 }} href={activeModalProject.liveDemoUrl} target="_blank" rel="noreferrer" className="btn-cyan">
-                    <span>Visit Live Demo</span>
-                    <ExternalLink size={16} />
-                  </motion.a>
+                  <a href={activeModalProject.liveDemoUrl} target="_blank" rel="noreferrer" className="btn-primary">
+                    <span>Live Demo</span>
+                    <ExternalLink size={14} />
+                  </a>
                 )}
                 {activeModalProject.githubUrl && (
-                  <motion.a whileHover={{ scale: 1.05 }} href={activeModalProject.githubUrl} target="_blank" rel="noreferrer" className="btn-dark-pill">
-                    <Github size={16} />
-                    <span>GitHub Repository</span>
-                  </motion.a>
+                  <a href={activeModalProject.githubUrl} target="_blank" rel="noreferrer" className="btn-outline">
+                    <Github size={14} />
+                    <span>GitHub</span>
+                  </a>
                 )}
               </div>
             </motion.div>
