@@ -23,11 +23,6 @@ export default function AdminLogin({ onClose }) {
     }
   };
 
-  const handleDemoFill = () => {
-    setUsername('admin');
-    setPassword('admin123');
-  };
-
   return (
     <div style={{
       position: 'fixed',
@@ -142,20 +137,6 @@ export default function AdminLogin({ onClose }) {
           >
             <KeyRound size={14} />
             <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDemoFill}
-            style={{
-              padding: '4px',
-              fontSize: '0.775rem',
-              color: 'var(--text-secondary)',
-              textAlign: 'center',
-              textDecoration: 'underline'
-            }}
-          >
-            Auto-fill credentials (admin / admin123)
           </button>
         </form>
       </div>
