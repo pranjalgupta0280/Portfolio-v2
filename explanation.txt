@@ -1,0 +1,50 @@
+================================================================================
+FAST HOMEPAGE LOADING & INSTANT RENDER ARCHITECTURE EXPLANATION
+================================================================================
+
+PROBLEM:
+The original application blocked the entire UI from rendering until the backend 
+API `/api/portfolio` returned data. Because free-tier server instances (e.g., Render)
+enter sleep mode after inactivity, the first API request was taking ~40 seconds 
+to wake up, forcing visitors to wait on a full-screen loading spinner.
+
+SOLUTION IMPLEMENTED:
+1. Instant Hydration (0ms Load):
+   - Created static default fallback data (`initialData.js`).
+   - Saved & retrieved live portfolio state in `localStorage` (`portfolio_cached_data_v1`).
+   - Application renders immediately on initial load without waiting for backend API.
+
+2. Stale-While-Revalidate (SWR) Background Sync:
+   - Frontend starts with cached/local initial data.
+   - Non-blocking background API fetch (`/api/portfolio`) updates content in real-time
+     once backend wakes up.
+
+FLOWCHART:
+--------------------------------------------------------------------------------
+
+[ User Visits Portfolio Website ]
+               │
+               ▼
+[ Read Cache (localStorage) OR Initial Static Data ] ──► (Instant Render: ~0ms)
+               │
+               ▼
+[ Mount React Components & Render Homepage UI Immediately ]
+               │
+               ▼
+[ Trigger Non-Blocking Background Fetch: GET /api/portfolio ]
+               │
+               ├────────────────────────────────────────┐
+               ▼                                        ▼
+    [ Backend Waking Up (~40s) ]            [ Backend Active (~0.3s) ]
+               │                                        │
+               ▼                                        ▼
+    (User sees UI immediately;               (Returns fresh data)
+    no blocking spinner display)                        │
+               │                                        ▼
+               └──────────────────────────► [ Update UI State & Save to Cache ]
+
+--------------------------------------------------------------------------------
+SUMMARY:
+- 0 second loader block on homepage visit.
+- Smooth user experience with background data synchronization.
+================================================================================
