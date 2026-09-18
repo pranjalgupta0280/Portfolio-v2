@@ -16,8 +16,8 @@ export default function Hero() {
 
   return (
     <section style={{
-      paddingTop: '140px',
-      paddingBottom: '60px',
+      paddingTop: '110px',
+      paddingBottom: '48px',
       borderBottom: '1px solid var(--border-hairline)'
     }}>
       <div className="container">
@@ -26,7 +26,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          style={{ marginBottom: '20px' }}
+          style={{ marginBottom: '16px' }}
         >
           <span className="kicker-tag">
             {profile.title || 'FULL-STACK ENGINEER & AGENTIC AI DEVELOPER'}
@@ -38,17 +38,17 @@ export default function Hero() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ maxWidth: '780px', marginBottom: '32px' }}
+          style={{ maxWidth: '780px', marginBottom: '28px' }}
         >
-          <h1 style={{ fontSize: '2.85rem', lineHeight: '1.15', fontWeight: '600', marginBottom: '20px', letterSpacing: '-0.035em', color: 'var(--text-primary)' }}>
+          <h1 style={{ fontSize: 'clamp(2.1rem, 6vw, 2.85rem)', lineHeight: '1.2', fontWeight: '600', marginBottom: '16px', letterSpacing: '-0.035em', color: 'var(--text-primary)' }}>
             {profile.name ? profile.name : 'Pranjal Gupta'}
           </h1>
 
-          <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', lineHeight: '1.75', marginBottom: '16px' }}>
+          <p style={{ fontSize: 'clamp(1rem, 3.5vw, 1.15rem)', color: 'var(--text-secondary)', lineHeight: '1.65', marginBottom: '14px' }}>
             {profile.shortIntro || 'Building scalable web platforms, agentic RAG architectures, multi-tenant B2B systems, and high-performance competitive algorithms.'}
           </p>
 
-          <p style={{ fontSize: '0.95rem', color: 'var(--text-tertiary)', lineHeight: '1.65' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)', lineHeight: '1.6' }}>
             Computer Science & Engineering student at JSS Academy of Technical Education, Noida. Experienced in React, Node.js, Express, MongoDB, TypeScript, and AI/Agentic RAG pipelines (LangChain, LangGraph, Qdrant Vector Search, NeMo Guardrails).
           </p>
         </motion.div>
@@ -58,26 +58,26 @@ export default function Hero() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '44px' }}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', width: '100%', maxWidth: '640px', marginBottom: '36px' }}
         >
-          <Link to="/resume" className="btn-primary">
+          <Link to="/resume" className="btn-primary" style={{ justifyContent: 'center' }}>
             <FileText size={16} />
             <span>View Resume</span>
           </Link>
 
-          <Link to="/projects" className="btn-outline">
+          <Link to="/projects" className="btn-outline" style={{ justifyContent: 'center' }}>
             <span>Explore Projects</span>
             <ArrowUpRight size={16} />
           </Link>
 
-          <Link to="/about" className="btn-outline">
+          <Link to="/about" className="btn-outline" style={{ justifyContent: 'center' }}>
             <GraduationCap size={16} />
-            <span>Education & Honors</span>
+            <span>Education</span>
           </Link>
 
-          <Link to="/contact" className="btn-outline">
+          <Link to="/contact" className="btn-outline" style={{ justifyContent: 'center' }}>
             <Mail size={16} />
-            <span>Get in Touch</span>
+            <span>Contact</span>
           </Link>
         </motion.div>
 
@@ -88,45 +88,45 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.3 }}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: '24px',
-            paddingTop: '28px',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '16px',
+            paddingTop: '24px',
             borderTop: '1px solid var(--border-hairline)',
             maxWidth: '640px'
           }}
         >
           <div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               1871
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
               LeetCode Knight
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               1324 / 3★
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
               Codeforces & CodeChef
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               {projects.length}+
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
               Built Projects
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               {skills.length}+
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
               Tech Stack
             </div>
           </div>

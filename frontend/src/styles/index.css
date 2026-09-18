@@ -245,4 +245,73 @@ kbd.kbd-badge {
   overflow: hidden;
 }
 
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN BREAKPOINTS (Mobile & Tablet)
+---------------------------------------------------- */
+.desktop-nav {
+  display: flex;
+}
 
+.mobile-toggle-btn {
+  display: none;
+}
+
+/* Tablet & Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-toggle-btn {
+    display: flex !important;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .section-padding {
+    padding: 48px 0;
+  }
+
+  .section-header {
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.925rem;
+  }
+
+  /* Buttons on mobile */
+  .btn-primary, .btn-outline {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+
+  /* Article / Writing row stack on small screens */
+  .writing-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+/* Small Phone Screens (<= 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2.1rem !important;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+  }
+
+  .kicker-tag {
+    font-size: 0.675rem;
+  }
+}

@@ -123,17 +123,17 @@ export default function BlogsPage() {
                     transition={{ duration: 0.25, delay: idx * 0.05 }}
                     className="editorial-card"
                     style={{
-                      padding: '24px',
+                      padding: '20px',
                       display: 'grid',
-                      gridTemplateColumns: blog.coverImageUrl ? '1fr 200px' : '1fr',
-                      gap: '24px',
+                      gridTemplateColumns: blog.coverImageUrl ? 'repeat(auto-fit, minmax(260px, 1fr))' : '1fr',
+                      gap: '20px',
                       alignItems: 'center',
                       cursor: 'pointer'
                     }}
                     onClick={() => handleOpenBlog(blog)}
                   >
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px', flexWrap: 'wrap' }}>
                         <span className="kicker-tag" style={{ fontSize: '0.7rem' }}>{blog.category || 'ENGINEERING'}</span>
                         <span style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-code)' }}>
                           {blog.publishedDate}
@@ -144,17 +144,17 @@ export default function BlogsPage() {
                         </span>
                       </div>
 
-                      <h3 className="writing-title" style={{ fontSize: '1.4rem', fontWeight: '600', marginBottom: '8px', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+                      <h3 className="writing-title" style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '8px', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
                         {blog.title}
                       </h3>
 
                       {blog.subtitle && (
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.6' }}>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '14px', lineHeight: '1.55' }}>
                           {blog.subtitle}
                         </p>
                       )}
 
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap', marginTop: '14px' }}>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                           {blog.tags?.map((tag) => (
                             <span key={tag} className="pill-tag" style={{ fontSize: '0.7rem' }}>
@@ -171,7 +171,7 @@ export default function BlogsPage() {
                     </div>
 
                     {blog.coverImageUrl && (
-                      <div style={{ height: '130px', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-hairline)' }}>
+                      <div style={{ height: '150px', width: '100%', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-hairline)' }}>
                         <img
                           src={blog.coverImageUrl}
                           alt={blog.title}

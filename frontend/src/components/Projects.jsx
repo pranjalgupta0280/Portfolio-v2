@@ -80,12 +80,12 @@ export default function Projects() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 15 }}
                 transition={{ duration: 0.25, delay: idx * 0.05 }}
-                className="editorial-card"
+                className="editorial-card project-card-item"
                 style={{
-                  padding: '24px',
+                  padding: '20px',
                   display: 'grid',
-                  gridTemplateColumns: '1fr 220px',
-                  gap: '24px',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '20px',
                   alignItems: 'center'
                 }}
               >
@@ -100,21 +100,21 @@ export default function Projects() {
                     )}
                   </div>
 
-                  <h3 style={{ fontSize: '1.35rem', fontWeight: '600', marginBottom: '8px', letterSpacing: '-0.02em' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '8px', letterSpacing: '-0.02em' }}>
                     {proj.title}
                   </h3>
 
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.925rem', marginBottom: '16px', lineHeight: '1.6' }}>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '14px', lineHeight: '1.55' }}>
                     {proj.description}
                   </p>
 
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '14px' }}>
                     {proj.techStack?.map((t) => (
                       <span key={t} className="pill-tag">{t}</span>
                     ))}
                   </div>
 
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
                     <button
                       onClick={() => setActiveModalProject(proj)}
                       className="btn-outline"
@@ -140,7 +140,7 @@ export default function Projects() {
                 </div>
 
                 {/* Right Image Container */}
-                <div style={{ height: '140px', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-hairline)' }}>
+                <div style={{ height: '160px', width: '100%', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-hairline)' }}>
                   <img
                     src={proj.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'}
                     alt={proj.title}

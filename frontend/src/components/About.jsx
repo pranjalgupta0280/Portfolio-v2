@@ -26,7 +26,8 @@ export default function About() {
         <div style={{
           display: 'flex',
           gap: '8px',
-          marginBottom: '32px',
+          flexWrap: 'wrap',
+          marginBottom: '24px',
           borderBottom: '1px solid var(--border-hairline)',
           paddingBottom: '12px'
         }}>

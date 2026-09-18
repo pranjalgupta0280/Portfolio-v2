@@ -1,50 +1,44 @@
 ================================================================================
-FAST HOMEPAGE LOADING & INSTANT RENDER ARCHITECTURE EXPLANATION
+MOBILE RESPONSIVENESS & ZERO-DISTORTION VIEW ARCHITECTURE
 ================================================================================
 
-PROBLEM:
-The original application blocked the entire UI from rendering until the backend 
-API `/api/portfolio` returned data. Because free-tier server instances (e.g., Render)
-enter sleep mode after inactivity, the first API request was taking ~40 seconds 
-to wake up, forcing visitors to wait on a full-screen loading spinner.
+1. MOBILE NAVIGATION & DRAWER SYSTEM
+   - Replaced fixed desktop-only horizontal navigation bar with an adaptive design.
+   - Added interactive Mobile Hamburger Button (Lucide Menu / X icon) for screen widths <= 768px.
+   - Implemented smooth dropdown/drawer transition with automatic body scroll locking (`overflow: hidden`) during menu open state.
 
-SOLUTION IMPLEMENTED:
-1. Instant Hydration (0ms Load):
-   - Created static default fallback data (`initialData.js`).
-   - Saved & retrieved live portfolio state in `localStorage` (`portfolio_cached_data_v1`).
-   - Application renders immediately on initial load without waiting for backend API.
+2. FLUID & CLAMP TYPOGRAPHY
+   - Standardized page header and title typography using CSS `clamp()` functions:
+     `font-size: clamp(2.1rem, 6vw, 2.85rem)`
+   - Prevents title clipping, line overflow, or layout breakages on narrow mobile screens (320px - 480px).
 
-2. Stale-While-Revalidate (SWR) Background Sync:
-   - Frontend starts with cached/local initial data.
-   - Non-blocking background API fetch (`/api/portfolio`) updates content in real-time
-     once backend wakes up.
+3. ADAPTIVE FLEX & GRID LAYOUTS
+   - Replaced fixed 2-column grids (`1fr 220px`) in Projects and Blogs lists with responsive CSS grid auto-fit patterns (`repeat(auto-fit, minmax(260px, 1fr))`).
+   - Action buttons (`View Resume`, `Explore Projects`, `Contact`) adaptively stretch to full width on mobile viewports for enhanced thumb-reachability.
+   - Metric counters (LeetCode, Codeforces, Projects, Stack) transition cleanly into a 2x2 mobile grid.
 
-FLOWCHART:
+--------------------------------------------------------------------------------
+RESPONSIVE LAYOUT FLOWCHART:
 --------------------------------------------------------------------------------
 
-[ User Visits Portfolio Website ]
-               │
-               ▼
-[ Read Cache (localStorage) OR Initial Static Data ] ──► (Instant Render: ~0ms)
-               │
-               ▼
-[ Mount React Components & Render Homepage UI Immediately ]
-               │
-               ▼
-[ Trigger Non-Blocking Background Fetch: GET /api/portfolio ]
-               │
-               ├────────────────────────────────────────┐
-               ▼                                        ▼
-    [ Backend Waking Up (~40s) ]            [ Backend Active (~0.3s) ]
-               │                                        │
-               ▼                                        ▼
-    (User sees UI immediately;               (Returns fresh data)
-    no blocking spinner display)                        │
-               │                                        ▼
-               └──────────────────────────► [ Update UI State & Save to Cache ]
+[ Screen Width > 768px (Desktop View) ]
+        │
+        ├── Full Horizontal Nav Menu
+        ├── 2-Column Hero & Metric Row
+        └── Side-by-side Project & Blog Cards (Text + Image)
+
+                                │ (Resizing / Mobile Device Visit)
+                                ▼
+
+[ Screen Width <= 768px (Mobile & Tablet View) ]
+        │
+        ├── Hamburger Toggle + Slide Drawer Menu
+        ├── Fluid Clamp Sized Headings & Subtitles
+        ├── Stacked Full-Width Buttons & 2x2 Metric Grid
+        └── Responsive Auto-Fit Project & Blog Cards (Stacking Image on Mobile)
 
 --------------------------------------------------------------------------------
 SUMMARY:
-- 0 second loader block on homepage visit.
-- Smooth user experience with background data synchronization.
+- 100% Mobile Responsive design with zero horizontal scroll distortion.
+- Clean touch-friendly interface across all phone screens.
 ================================================================================
